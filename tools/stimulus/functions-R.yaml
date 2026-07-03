@@ -1,0 +1,742 @@
+# vim:set ts=4 sw=4 sts=4 et:
+#
+# This file is a YAML representation of the R-specific parts of the function
+# definitions. They are currently used by Stimulus to generate code for the
+# R interface
+#
+# See https://github.com/igraph/stimulus for more information
+
+#######################################
+# The basic interface
+#######################################
+
+igraph_get_eid:
+    DEPS: eid ON graph, from ON graph, to ON graph
+
+igraph_get_eids:
+    DEPS: pairs ON graph, eids ON graph
+
+igraph_get_all_eids_between:
+    # This is a temporary hack; we need to find a way to handle default values
+    # for dependencies. The problem is that the VERTEXINDEX type needs two
+    # dependencies: the graph and the vertex set, but we only have the graph
+    # in the argument list.
+    DEPS: from ON graph, to ON graph, eids ON graph
+
+igraph_is_same_graph:
+    # Not needed in R; we can simply compare things in the R layer without
+    # calling into C
+
+#######################################
+# Constructors, deterministic
+#######################################
+
+igraph_sparse_adjacency:
+  # Turning INOUT SPARSEMAT adjmatrix to IN SPARSEMAT adjmatrix
+  PARAMS: OUT GRAPH graph, IN SPARSEMAT adjmatrix, ADJACENCY_MODE mode=DIRECTED, LOOPS loops=ONCE
+
+igraph_sparse_weighted_adjacency:
+  # Turning INOUT SPARSEMAT adjmatrix to IN SPARSEMAT adjmatrix
+  PARAMS: OUT GRAPH graph, IN SPARSEMAT adjmatrix, ADJACENCY_MODE mode=DIRECTED, OUT EDGEWEIGHTS weights, LOOPS loops=ONCE
+
+igraph_circulant:
+    R:
+      GATTR:
+        name: Circulant graph
+      GATTR-PARAM: shifts
+
+igraph_lcf_vector:
+    R:
+      GATTR:
+        name: LCF graph
+
+igraph_realize_degree_sequence:
+    PARAMS: |-
+        OUT GRAPH graph, VECTOR_INT out_deg, OPTIONAL VECTOR_INT in_deg,
+        EDGE_TYPE_SW allowed_edge_types=SIMPLE, REALIZE_DEGSEQ_METHOD method=SMALLEST
+    R:
+      GATTR:
+        name: Graph from degree sequence
+      GATTR-PARAM: out_deg, in_deg, allowed_edge_types, method
+
+igraph_realize_bipartite_degree_sequence:
+    R:
+      GATTR:
+        name: Bipartite graph from degree sequence
+      GATTR-PARAM: degrees1, degrees2, allowed_edge_types, method
+
+igraph_full_multipartite:
+    DEPS: types ON res$graph
+    R:
+      GATTR:
+        name: Full multipartite graph
+      GATTR-PARAM: n, mode
+
+igraph_turan:
+    DEPS: types ON res$graph
+    R:
+      GATTR:
+        name: Turan graph
+      GATTR-PARAM: n, r
+
+#######################################
+# Constructors, games
+#######################################
+
+igraph_growing_random_game:
+    PARAMS: |-
+        OUT GRAPH graph, INTEGER n, INTEGER m=1, *,
+        BOOLEAN directed=True, BOOLEAN citation=False
+    R:
+      GATTR:
+        name: Growing random graph
+      GATTR-PARAM: m, citation
+
+igraph_forest_fire_game:
+    R:
+      GATTR:
+        name: Forest fire model
+      GATTR-PARAM: fw_prob, bw_factor, ambs
+
+igraph_simple_interconnected_islands_game:
+    R:
+      GATTR:
+        name: Interconnected islands model
+      GATTR-PARAM: islands_n, islands_size, islands_pin, n_inter
+
+igraph_static_fitness_game:
+    R:
+      GATTR:
+        name: Static fitness model
+      GATTR-PARAM: loops, multiple
+
+igraph_static_power_law_game:
+    R:
+      GATTR:
+        name: Static power law model
+      GATTR-PARAM: exponent_out, exponent_in, loops, multiple, finite_size_correction
+
+igraph_k_regular_game:
+    R:
+      GATTR:
+        name: k-regular graph
+      GATTR-PARAM: k
+
+igraph_sbm_game:
+    R:
+      GATTR:
+        name: Stochastic block model
+      GATTR-PARAM: loops
+
+igraph_hsbm_game:
+    INTERNAL: true
+    R:
+      GATTR:
+        name: Hierarchical stochastic block model
+      GATTR-PARAM: m, rho, C, p
+
+igraph_hsbm_list_game:
+    INTERNAL: true
+    R:
+      GATTR:
+        name: Hierarchical stochastic block model
+      GATTR-PARAM: p
+
+igraph_correlated_game:
+    R:
+      GATTR:
+        name: Correlated random graph
+      GATTR-PARAM: corr, p
+
+#######################################
+# Basic query functions
+#######################################
+
+#######################################
+# Structural properties
+#######################################
+
+igraph_get_all_shortest_paths:
+    PARAM_NAMES:
+        vertices: vpaths
+        edges: epaths
+
+igraph_get_all_shortest_paths_dijkstra:
+    PARAM_NAMES:
+        vertices: vpaths
+        edges: epaths
+
+igraph_voronoi:
+    FIRST_KW_PARAM: weights
+
+igraph_get_k_shortest_paths:
+    PARAM_ORDER: graph, from, to, *, k, ...
+    PARAM_NAMES:
+        vertex_paths: vpaths
+        edge_paths: epaths
+
+igraph_get_widest_path:
+    PARAMS: |-
+        GRAPH graph,
+        OPTIONAL OUT VERTEX_INDICES vertices, OPTIONAL OUT EDGE_INDICES edges,
+        VERTEX from, VERTEX to, EDGEWEIGHTS weights=NULL, NEIMODE mode=OUT
+    DEPS: |-
+        from ON graph, to ON graph, weights ON graph, vertices ON graph, edges ON graph
+
+igraph_get_widest_paths:
+    PARAMS: |-
+        GRAPH graph,
+        OPTIONAL OUT VERTEXSET_LIST vertices, OPTIONAL OUT EDGESET_LIST edges,
+        VERTEX from, VERTEX_SELECTOR to=ALL, EDGEWEIGHTS weights=NULL,
+        NEIMODE mode=OUT, OPTIONAL OUT VECTOR_INT parents,
+        OPTIONAL OUT VECTOR_INT inbound_edges
+    DEPS: |-
+        from ON graph, to ON graph, weights ON graph, vertices ON graph,
+        edges ON graph
+
+igraph_widest_path_widths_dijkstra:
+    PARAMS: |-
+        GRAPH graph, OUT MATRIX res, VERTEX_SELECTOR from=ALL,
+        VERTEX_SELECTOR to=ALL, EDGEWEIGHTS weights=NULL, NEIMODE mode=OUT
+    DEPS: from ON graph, to ON graph, weights ON graph
+
+igraph_widest_path_widths_floyd_warshall:
+    PARAMS: |-
+        GRAPH graph, OUT MATRIX res, VERTEX_SELECTOR from=ALL,
+        VERTEX_SELECTOR to=ALL, EDGEWEIGHTS weights=NULL, NEIMODE mode=OUT
+    DEPS: from ON graph, to ON graph, weights ON graph
+
+igraph_spanner:
+    DEPS: weights ON graph, spanner ON graph
+
+igraph_betweenness_subset:
+    DEPS: |-
+        vids ON graph, weights ON graph, res ON graph vids, sources ON graph, targets ON graph
+
+igraph_personalized_pagerank_vs:
+    DEPS: vids ON graph, weights ON graph, vector ON graph vids,
+        options ON algo, reset_vids ON graph
+
+igraph_rewire:
+    R:
+        DEFAULTS:
+            mode: 0L
+
+igraph_average_path_length_dijkstra:
+    PARAM_NAMES:
+        unconn_pairs: unconnected
+        unconn: unconnected
+
+igraph_maxdegree:
+    PARAM_ORDER: graph, *, vids, ...
+    PARAM_NAMES:
+        vids: v
+
+igraph_is_loop:
+    PARAM_NAMES:
+        es: eids
+
+igraph_is_multiple:
+    PARAM_NAMES:
+        es: eids
+
+igraph_count_multiple:
+    PARAM_NAMES:
+        es: eids
+
+igraph_chung_lu_game:
+    PARAMS: |-
+        OUT GRAPH graph, VECTOR out_weights, OPTIONAL VECTOR in_weights, *,
+        BOOLEAN loops=True, CHUNG_LU_VARIANT variant=ORIGINAL
+    R:
+      GATTR:
+        name: Chung-Lu model
+      GATTR-PARAM: variant
+
+igraph_eigenvector_centrality:
+    # This is a temporary hack; we need to find a way to handle default values
+    # for dependencies. The problem is that the VERTEXINDEX type needs two
+    # dependencies: the graph and the vertex set, but we only have the graph
+    # in the argument list.
+    DEPS: weights ON graph, vector ON graph V(graph)
+
+igraph_hub_score:
+    DEPS: weights ON graph, vector ON graph V(graph)
+
+igraph_authority_score:
+    DEPS: weights ON graph, vector ON graph V(graph)
+
+igraph_hub_and_authority_scores:
+    # This is a temporary hack; we need to find a way to handle default values
+    # for dependencies. The problem is that the VERTEXINDEX type needs two
+    # dependencies: the graph and the vertex set, but we only have the graph
+    # in the argument list.
+    DEPS: weights ON graph, hub ON graph V(graph), authority ON graph V(graph)
+    PARAMS: GRAPH graph, OUT VERTEX_QTY hub, OUT VERTEX_QTY authority,
+        OUT REAL value, BOOLEAN scale=True, OPTIONAL EDGEWEIGHTS weights,
+        INOUT ARPACKOPT options=ARPACK_DEFAULTS
+
+igraph_is_mutual:
+    PARAM_NAMES:
+        es: eids
+
+igraph_eccentricity_dijkstra:
+    PARAM_ORDER: graph, vids, *, weights, ...
+
+igraph_graph_center_dijkstra:
+    FIRST_KW_PARAM: weights
+
+igraph_radius_dijkstra:
+    FIRST_KW_PARAM: weights
+
+igraph_pseudo_diameter:
+    DEPS: start_vid ON graph
+
+igraph_pseudo_diameter_dijkstra:
+    DEPS: start_vid ON graph, weights ON graph
+
+igraph_random_walk:
+    PARAM_ORDER: graph, start, steps, ...
+
+#######################################
+# Degree sequences
+#######################################
+
+#######################################
+# Visitors
+#######################################
+
+# We ignore the callback function for autogeneration and provide our own _closure function
+# that calls the underlying C implementation.
+# See tools/AGENTS.md for details.
+igraph_bfs:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_bfs_closure:
+    PARAMS: |-
+        GRAPH graph, VERTEX root, OPTIONAL VERTEX_INDICES roots,
+        NEIMODE mode=OUT, BOOLEAN unreachable,
+        OPTIONAL VERTEX_INDICES restricted,
+        OUT VERTEX_INDICES order, OUT VECTOR_INT rank,
+        OUT VECTOR_INT parents,
+        OUT VECTOR_INT pred, OUT VECTOR_INT succ,
+        OUT VECTOR_INT dist, CLOSURE callback
+    DEPS: root ON graph, roots ON graph, restricted ON graph, order ON graph
+
+igraph_bfs_simple:
+    DEPS: root ON graph, order ON graph
+
+igraph_dfs:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_dfs_closure:
+    PARAMS: |-
+        GRAPH graph, VERTEX root, NEIMODE mode=OUT, BOOLEAN unreachable,
+        OUT VERTEX_INDICES order, OUT VERTEX_INDICES order_out,
+        OUT VECTOR_INT father, OUT VECTOR_INT dist,
+        CLOSURE in_callback, CLOSURE out_callback
+    DEPS: root ON graph, order ON graph, order_out ON graph
+
+#######################################
+# Bipartite graphs
+#######################################
+
+# Hack: add NULL default on 'types' parameter. Even though this parameter is not
+# optional in the C core, it must be optional in R so that weights can be
+# automatically taken from the 'type' edge attribute.
+igraph_bipartite_projection_size:
+    PARAMS: |-
+        GRAPH graph, BIPARTITE_TYPES types=NULL,
+        OUT INTEGER vcount1, OUT INTEGER ecount1,
+        OUT INTEGER vcount2, OUT INTEGER ecount2
+    DEPS: types ON graph
+
+#######################################
+# Bipartite graphs
+#######################################
+
+igraph_create_bipartite:
+    DEPS: types ON res$graph V(res$graph)
+
+igraph_biadjacency:
+    DEPS: types ON res$graph V(res$graph)
+
+# Use the name 'type' instead of 'types' (provided by the C core)
+igraph_is_bipartite:
+    PARAMS: GRAPH graph, OUT BOOLEAN res, OPTIONAL OUT BIPARTITE_TYPES type
+    DEPS: type ON graph V(graph)
+
+igraph_bipartite_game_gnp:
+    PARAMS: |-
+        OUT GRAPH graph, OPTIONAL OUT BIPARTITE_TYPES_UNNAMED types,
+        INTEGER n1, INTEGER n2, REAL p, BOOLEAN directed=False,
+        NEIMODE mode=ALL
+
+igraph_bipartite_game_gnm:
+    PARAMS: |-
+        OUT GRAPH graph, OPTIONAL OUT BIPARTITE_TYPES_UNNAMED types,
+        INTEGER n1, INTEGER n2, INTEGER m, BOOLEAN directed=False,
+        NEIMODE mode=ALL
+
+igraph_bipartite_game:
+    DEPS: types ON res$graph V(res$graph)
+
+igraph_full_bipartite:
+    DEPS: types ON res$graph
+
+
+#######################################
+# Spectral properties
+#######################################
+
+#######################################
+# Spectral properties
+#######################################
+
+#######################################
+# Components
+#######################################
+
+#######################################
+# Percolation
+#######################################
+
+igraph_edgelist_percolation:
+    # VERTEX_INDEX_PAIRS has a dependency that we don't have here
+    PARAMS: INDEX_PAIRS edges, OUT VECTOR_INT giant_size, OUT VECTOR_INT vertex_count
+
+#######################################
+# Cliques
+#######################################
+
+igraph_cliques:
+    PARAM_NAMES:
+        min_size: min
+        max_size: max
+
+igraph_cliques_callback:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_cliques_callback_closure:
+    PARAMS: |-
+        GRAPH graph, INTEGER min_size=0, INTEGER max_size=0,
+        CLOSURE callback
+
+igraph_clique_size_hist:
+    # Wrapper function is hand-rolled in the R layer; the generated version
+    # is renamed and internal
+    INTERNAL: true
+
+igraph_maximal_cliques_callback:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_maximal_cliques_callback_closure:
+    PARAMS: |-
+        GRAPH graph, INTEGER min_size=0, INTEGER max_size=0,
+        CLOSURE callback
+
+igraph_maximal_cliques_hist:
+    # Wrapper function is hand-rolled in the R layer; the generated version
+    # is renamed and internal
+    INTERNAL: true
+
+#######################################
+# Layouts
+#######################################
+
+igraph_layout_fruchterman_reingold:
+    PARAMS: |-
+        GRAPH graph, OPTIONAL INOUT MATRIX coords,
+        BOOLEAN use_seed=FALSE, INTEGER niter=500,
+        REAL start_temp=sqrt(vcount(graph)),
+        LAYOUT_GRID grid=AUTO, OPTIONAL EDGEWEIGHTS weights,
+        OPTIONAL VECTOR minx, OPTIONAL VECTOR maxx,
+        OPTIONAL VECTOR miny, OPTIONAL VECTOR maxy,
+        DEPRECATED coolexp=NULL, DEPRECATED maxdelta=NULL, DEPRECATED area=NULL,
+        DEPRECATED repulserad=NULL
+    DEPS: weights ON graph
+
+igraph_layout_lgl:
+    PARAMS: |-
+        GRAPH graph, OUT MATRIX res, INTEGER maxiter=150, REAL maxdelta=vcount(graph),
+        REAL area=vcount(graph)^2, REAL coolexp=1.5, REAL repulserad=vcount(graph)^3, REAL cellsize=vcount(graph),
+        INTEGER root=-1
+
+igraph_layout_fruchterman_reingold_3d:
+    PARAMS: |-
+        GRAPH graph, OPTIONAL INOUT MATRIX coords,
+        BOOLEAN use_seed=FALSE, INTEGER niter=500,
+        REAL start_temp=sqrt(vcount(graph)),
+        OPTIONAL EDGEWEIGHTS weights,
+        OPTIONAL VECTOR minx, OPTIONAL VECTOR maxx,
+        OPTIONAL VECTOR miny, OPTIONAL VECTOR maxy,
+        OPTIONAL VECTOR minz, OPTIONAL VECTOR maxz,
+        DEPRECATED coolexp=NULL, DEPRECATED maxdelta=NULL, DEPRECATED area=NULL,
+        DEPRECATED repulserad=NULL
+    DEPS: weights ON graph
+
+igraph_layout_drl:
+    DEPS: weights ON graph
+
+igraph_layout_drl_3d:
+    DEPS: weights ON graph
+
+#######################################
+# Cocitation and other similarity measures
+#######################################
+
+#######################################
+# Community structure
+#######################################
+
+igraph_community_eb_get_merges:
+    DEPS: edges ON graph, weights ON graph
+
+igraph_community_leading_eigenvector:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_community_leading_eigenvector_callback_closure:
+    PARAMS: |-
+        GRAPH graph, OPTIONAL EDGEWEIGHTS weights,
+        OPTIONAL OUT MATRIX_INT merges, OPTIONAL INOUT VECTOR_INT membership,
+        INTEGER steps=-1,
+        INOUT ARPACKOPT options=ARPACK_DEFAULTS,
+        OPTIONAL OUT REAL modularity, BOOLEAN start=False,
+        OPTIONAL OUT VECTOR eigenvalues,
+        OPTIONAL OUT VECTOR_LIST eigenvectors,
+        OPTIONAL OUT VECTOR history,
+        CLOSURE callback=NULL,
+        CLOSURE_EXTRA extra=NULL,
+        CLOSURE_ENV env=parent.frame(),
+        CLOSURE_ENV_ARP env_arp=environment(igraph.i.levc.arp)
+    DEPS: weights ON graph, membership ON graph
+    R:
+      CLASS: igraph.eigenc
+
+#######################################
+# Graphlets
+#######################################
+
+#######################################
+# Hierarchical random graphs
+#######################################
+
+igraph_hrg_game:
+    R:
+      GATTR:
+        name: Hierarchical random graph model
+
+igraph_hrg_create:
+    R:
+      CLASS: igraphHRG
+
+#######################################
+# Conversion
+#######################################
+
+igraph_to_directed:
+    PARAMS: INOUT GRAPH graph, TODIRECTED mode=MUTUAL
+
+#######################################
+# Read and write foreign formats
+#######################################
+
+igraph_read_graph_ncol:
+    PARAMS: |-
+        OUT GRAPH graph, INFILE instream, OPTIONAL VECTOR_STR predefnames, BOOLEAN names=TRUE,
+        ADD_WEIGHTS weights=TRUE, BOOLEAN directed=TRUE
+
+igraph_read_graph_lgl:
+    PARAMS: |-
+        OUT GRAPH graph, INFILE instream, BOOLEAN names=TRUE, ADD_WEIGHTS weights=TRUE, BOOLEAN directed=TRUE
+
+# TODO: temporarily disabled
+igraph_write_graph_dimacs_flow:
+    DEPS: source ON graph, target ON graph
+    PARAMS: |-
+        INOUT GRAPH graph, OUTFILE outstream, VERTEX source=0, VERTEX target=0,
+        VECTOR capacity
+
+#######################################
+# Motifs
+#######################################
+
+#######################################
+# Graph operators
+#######################################
+
+#######################################
+# Maximum flows, minimum cuts
+#######################################
+
+#######################################
+# Listing s-t cuts, separators
+#######################################
+
+igraph_cohesive_blocks:
+    R:
+      CLASS: cohesiveBlocks
+
+#######################################
+# K-Cores
+#######################################
+
+#######################################
+# Graph isomorphism
+#######################################
+
+igraph_get_isomorphisms_vf2_callback:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_get_isomorphisms_vf2_callback_closure:
+    PARAMS: |-
+        GRAPH graph1, GRAPH graph2,
+        OPTIONAL VERTEX_COLOR vertex_color1, OPTIONAL VERTEX_COLOR vertex_color2,
+        OPTIONAL EDGE_COLOR edge_color1, OPTIONAL EDGE_COLOR edge_color2,
+        CLOSURE callback
+    DEPS: |-
+        vertex_color1 ON graph1, vertex_color2 ON graph2,
+        edge_color1 ON graph1, edge_color2 ON graph2
+
+igraph_get_subisomorphisms_vf2_callback:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_get_subisomorphisms_vf2_callback_closure:
+    PARAMS: |-
+        GRAPH graph1, GRAPH graph2,
+        OPTIONAL VERTEX_COLOR vertex_color1, OPTIONAL VERTEX_COLOR vertex_color2,
+        OPTIONAL EDGE_COLOR edge_color1, OPTIONAL EDGE_COLOR edge_color2,
+        CLOSURE callback
+    DEPS: |-
+        vertex_color1 ON graph1, vertex_color2 ON graph2,
+        edge_color1 ON graph1, edge_color2 ON graph2
+
+#######################################
+# Matching
+#######################################
+
+#######################################
+# Embedding
+#######################################
+
+#######################################
+# Eigensolvers
+#######################################
+
+#######################################
+# Fitting power laws
+#######################################
+
+#######################################
+# Dynamics, on networks
+#######################################
+
+igraph_sir:
+    R:
+      CLASS: sir
+
+#######################################
+# Other, not graph related
+#######################################
+
+#######################################
+# Finding cycles
+#######################################
+
+igraph_simple_cycles_callback:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_simple_cycles_callback_closure:
+    PARAMS: |-
+        GRAPH graph, NEIMODE mode=OUT, INTEGER min_cycle_length=-1, INTEGER max_cycle_length=-1,
+        CLOSURE callback
+
+#######################################
+# Motifs
+#######################################
+
+igraph_motifs_randesu_callback:
+    IGNORE: RR, RC, RInit  # Has callback parameter
+
+igraph_motifs_randesu_callback_closure:
+    PARAMS: |-
+        GRAPH graph, INTEGER size, OPTIONAL VECTOR cut_prob,
+        CLOSURE callback
+
+#######################################
+# Eulerian functions
+#######################################
+
+igraph_is_eulerian:
+    INTERNAL: true
+
+igraph_eulerian_path:
+    PARAM_NAMES:
+        edge_res: epath
+        vertex_res: vpath
+
+igraph_eulerian_cycle:
+    PARAM_NAMES:
+        edge_res: epath
+        vertex_res: vpath
+
+#######################################
+# Cycle bases
+#######################################
+
+#######################################
+# Trees
+#######################################
+
+igraph_is_tree:
+    PARAMS: GRAPH graph, PRIMARY OUT BOOLEAN res, OPTIONAL OUT VERTEX_ROOT root, NEIMODE mode=OUT
+    DEPS: root ON graph
+
+igraph_from_prufer:
+    R:
+      GATTR:
+        name: Tree from Prufer sequence
+      GATTR-PARAM: prufer
+
+igraph_random_spanning_tree:
+    PARAMS: GRAPH graph, OUT EDGE_INDICES res, OPTIONAL VERTEX vid=0
+
+#######################################
+# Coloring
+#######################################
+
+igraph_is_bipartite_coloring:
+    PARAMS: GRAPH graph, BIPARTITE_TYPES types, OUT BOOLEAN res, OPTIONAL OUT NULL mode
+    DEPS: types ON graph
+
+#######################################
+# Microscopic update
+#######################################
+
+igraph_moran_process:
+    DEPS: weights ON graph, quantities ON graph V(graph), strategies ON graph
+
+#######################################
+# Other, (yet) undocumented functions
+#######################################
+
+#######################################
+# Progress, status handling
+#######################################
+
+#######################################
+# Other functions, documented, graph related
+#######################################
+
+igraph_expand_path_to_pairs:
+    DEPS: path ON path
+
+igraph_invalidate_cache:
+    PARAMS: INOUT GRAPH graph
+
+igraph_vertex_path_from_edge_path:
+    DEPS: start ON graph, vertex_path ON graph, edge_path ON graph
+
+#######################################
+# Meta info
+#######################################
