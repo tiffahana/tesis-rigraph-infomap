@@ -97,6 +97,7 @@ IGRAPH_EXPORT igraph_error_t igraph_community_infomap(const igraph_t * graph,
                                            const igraph_vector_t *v_weights,
                                            igraph_integer_t nb_trials,
                                            igraph_vector_int_t *membership,
+                                           igraph_vector_int_t *level_1_membership,
                                            igraph_real_t *codelength);
 
 IGRAPH_EXPORT igraph_error_t igraph_community_edge_betweenness(const igraph_t *graph,

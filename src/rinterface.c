@@ -12658,6 +12658,7 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
   igraph_vector_t c_v_weights;
   igraph_integer_t c_nb_trials;
   igraph_vector_int_t c_membership;
+  igraph_vector_int_t c_level_1_membership;
   igraph_real_t c_codelength;
   igraph_integer_t no_of_nodes;
   igraph_integer_t i;
@@ -12682,6 +12683,9 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
   IGRAPH_R_CHECK(igraph_vector_int_init(&c_membership, 0));
   IGRAPH_FINALLY(igraph_vector_int_destroy, &c_membership);
 
+  IGRAPH_R_CHECK(igraph_vector_int_init(&c_level_1_membership, 0));
+  IGRAPH_FINALLY(igraph_vector_int_destroy, &c_level_1_membership);
+
                                         /* Call igraph */
   IGRAPH_R_CHECK(igraph_community_infomap(
     &c_graph,
@@ -12689,6 +12693,7 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
     (Rf_isNull(v_weights) ? 0 : &c_v_weights),
     c_nb_trials,
     &c_membership,
+    &c_level_1_membership,
     &c_codelength
   ));
 
@@ -12700,15 +12705,28 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
 
   no_of_nodes = igraph_vector_int_size(&c_membership);
 
-  PROTECT(multilevel_modules = Rf_allocMatrix(INTSXP, (int) no_of_nodes, 2));
+  PROTECT(multilevel_modules = Rf_allocMatrix(INTSXP, (int) no_of_nodes, 3));
 
   for (i = 0; i < no_of_nodes; i++) {
+    igraph_integer_t level_1_value = VECTOR(c_level_1_membership)[i];
+
+    /* Column 1: node_id */
     INTEGER(multilevel_modules)[i] = (int) i + 1;
-    INTEGER(multilevel_modules)[i + no_of_nodes] = (int) VECTOR(c_membership)[i] + 1;
+
+    /* Column 2: level_1 */
+    if (level_1_value >= 0) {
+      INTEGER(multilevel_modules)[i + no_of_nodes] = (int) level_1_value + 1;
+    } else {
+      INTEGER(multilevel_modules)[i + no_of_nodes] = NA_INTEGER;
+    }
+
+    /* Column 3: final_module */
+    INTEGER(multilevel_modules)[i + 2 * no_of_nodes] = (int) VECTOR(c_membership)[i] + 1;
   }
 
   igraph_vector_int_destroy(&c_membership);
-  IGRAPH_FINALLY_CLEAN(1);
+  igraph_vector_int_destroy(&c_level_1_membership);
+  IGRAPH_FINALLY_CLEAN(2);
 
   PROTECT(codelength = NEW_NUMERIC(1));
   REAL(codelength)[0] = c_codelength;

@@ -244,6 +244,7 @@ igraph_error_t igraph_community_infomap(const igraph_t * graph,
                              const igraph_vector_t *v_weights,
                              igraph_integer_t nb_trials,
                              igraph_vector_int_t *membership,
+                             igraph_vector_int_t *level_1_membership,
                              igraph_real_t *codelength) {
 
     IGRAPH_HANDLE_EXCEPTIONS_BEGIN;
@@ -254,8 +255,6 @@ igraph_error_t igraph_community_infomap(const igraph_t * graph,
             IGRAPH_ERROR("Invalid edge weight vector length.", IGRAPH_EINVAL);
         }
         if (ecount > 0) {
-            /* Allow both positive and zero weights.
-             * The conversion to Infomap format will simply skip zero-weight edges/ */
             igraph_real_t minweight = igraph_vector_min(e_weights);
             if (minweight < 0) {
                 IGRAPH_ERROR("Edge weights must not be negative.", IGRAPH_EINVAL);
@@ -271,8 +270,6 @@ igraph_error_t igraph_community_infomap(const igraph_t * graph,
             IGRAPH_ERROR("Invalid vertex weight vector length.", IGRAPH_EINVAL);
         }
         if (vcount > 0) {
-            /* TODO: Currently we require strictly positive. Can this be
-             * relaxed to non-negative values? */
             igraph_real_t minweight = igraph_vector_min(v_weights);
             if (minweight <= 0) {
                 IGRAPH_ERROR("Vertex weights must be positive.", IGRAPH_EINVAL);
@@ -293,21 +290,38 @@ igraph_error_t igraph_community_infomap(const igraph_t * graph,
     igraph_integer_t Nnode = fgraph.Nnode;
     IGRAPH_CHECK(igraph_vector_int_resize(membership, Nnode));
 
+    // create experimental level_1_membership vector
+    if (level_1_membership) {
+        IGRAPH_CHECK(igraph_vector_int_resize(level_1_membership, Nnode));
+        for (igraph_integer_t i = 0; i < Nnode; i++) {
+            VECTOR(*level_1_membership)[i] = -1;
+        }
+    }
+
     for (igraph_integer_t trial = 0; trial < nb_trials; trial++) {
         FlowGraph cpy_fgraph(fgraph);
 
-        //partition the network
+        // partition the network
         IGRAPH_CHECK(infomap_partition(cpy_fgraph, false));
 
         // if better than the better...
         if (cpy_fgraph.codeLength < shortestCodeLength) {
             shortestCodeLength = cpy_fgraph.codeLength;
-            // ... store the partition
+
+            // store the final partition
             for (igraph_integer_t i = 0 ; i < cpy_fgraph.Nnode ; i++) {
                 size_t Nmembers = cpy_fgraph.node[i].members.size();
                 for (size_t k = 0; k < Nmembers; k++) {
-                    //cluster[ cpy_fgraph->node[i].members[k] ] = i;
                     VECTOR(*membership)[cpy_fgraph.node[i].members[k]] = i;
+                }
+            }
+
+            // store experimental first-level assignment for the best partition
+            if (level_1_membership) {
+                for (igraph_integer_t i = 0; i < Nnode; i++) {
+                    if (i < (igraph_integer_t) cpy_fgraph.level_1_membership.size()) {
+                        VECTOR(*level_1_membership)[i] = cpy_fgraph.level_1_membership[i];
+                    }
                 }
             }
         }

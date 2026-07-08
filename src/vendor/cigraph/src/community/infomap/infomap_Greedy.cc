@@ -353,17 +353,26 @@ void Greedy::apply(bool sort) {
     vector<map<igraph_integer_t, double> > outFlowNtoM(Nmod);
 
     for (igraph_integer_t i = 0; i < Nnode; i++) {
-        igraph_integer_t i_M = nodeInMod[node_index[i]]; //final id of the module of the node i
+        igraph_integer_t i_M = nodeInMod[node_index[i]]; // final id of the module of the node i
+
+        // Experimental: capture first-level module assignment for original node members
+        for (const auto &v : node[i].members) {
+            if (v >= 0 &&
+                v < (igraph_integer_t) graph->level_1_membership.size() &&
+                graph->level_1_membership[v] == -1) {
+                graph->level_1_membership[v] = i_M;
+            }
+        }
+
         // add node members to the module
         copy( node[i].members.begin(), node[i].members.end(),
-              back_inserter( node_tmp[i_M].members ) );
+            back_inserter( node_tmp[i_M].members ) );
 
         for (const auto &link : node[i].outLinks) {
             igraph_integer_t nb         = link.first;
             igraph_integer_t nb_M       = nodeInMod[node_index[nb]];
             double nb_flow = link.second;
             if (nb != i) {
-                // inserts key nb_M if it does not exist
                 outFlowNtoM[i_M][nb_M] += nb_flow;
             }
         }
@@ -406,6 +415,9 @@ void Greedy::apply(bool sort) {
     // Option to move to empty module
     mod_empty.clear();
     Nempty = 0;
+
+    // Keep experimental level assignment before replacing the graph
+    tmp_fgraph.level_1_membership = graph->level_1_membership;
 
     //swap node between tmp_graph and graph, then destroy tmp_fgraph
     graph->swap(tmp_fgraph);

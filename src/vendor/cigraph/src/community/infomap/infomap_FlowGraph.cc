@@ -40,6 +40,7 @@ void FlowGraph::init(igraph_integer_t n, const igraph_vector_t *v_weights) {
             node.emplace_back(i, 1.0);
         }
     }
+    level_1_membership.assign(Nnode, -1);
 }
 
 FlowGraph::FlowGraph(igraph_integer_t n) {
@@ -94,6 +95,8 @@ FlowGraph::FlowGraph(const FlowGraph &fgraph) {
     for (igraph_integer_t i = 0; i < n; i++) {
         node[i] = fgraph.node[i];
     }
+
+    level_1_membership = fgraph.level_1_membership;
 
     //XXX: quid de danglings et Ndanglings?
 
@@ -177,6 +180,7 @@ FlowGraph::FlowGraph(const FlowGraph &fgraph, const vector<igraph_integer_t> &su
  */
 void FlowGraph::swap(FlowGraph &fgraph) noexcept {
     node.swap(fgraph.node);
+    level_1_membership.swap(fgraph.level_1_membership);
 
     igraph_integer_t Nnode_tmp = fgraph.Nnode;
     fgraph.Nnode = Nnode;
@@ -367,6 +371,7 @@ void FlowGraph::back_to(const FlowGraph &fgraph) {
     // delete current nodes and copy original ones
     Nnode = fgraph.Nnode;
     node = fgraph.node;
+    level_1_membership = fgraph.level_1_membership;
 
     // restore atributs
     alpha = fgraph.alpha ;

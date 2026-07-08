@@ -63,6 +63,9 @@ public:
     /*************************************************************************/
     std::vector<Node> node;
     igraph_integer_t Nnode;
+    
+    /* Experimental: stores the first captured module assignment for each node */
+    std::vector<igraph_integer_t> level_1_membership;
 
     double alpha, beta;
 
