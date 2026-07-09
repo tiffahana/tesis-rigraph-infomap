@@ -418,6 +418,7 @@ void Greedy::apply(bool sort) {
 
     // Keep experimental level assignment before replacing the graph
     tmp_fgraph.level_1_membership = graph->level_1_membership;
+    tmp_fgraph.level_2_membership = graph->level_2_membership;
 
     //swap node between tmp_graph and graph, then destroy tmp_fgraph
     graph->swap(tmp_fgraph);

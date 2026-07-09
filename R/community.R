@@ -2708,21 +2708,68 @@ cluster_infomap <- function(
   res$algorithm <- "infomap"
   res$membership <- res$membership + 1
 
-  if (!is.null(res$multilevel_modules) && ncol(res$multilevel_modules) >= 3) {
-  level_1 <- res$multilevel_modules[, 2]
-  final_module <- res$multilevel_modules[, 3]
+if (!is.null(res$multilevel_modules) && ncol(res$multilevel_modules) >= 4) {
+  final_module <- res$membership
+  n_mod <- max(final_module)
 
-  level_1_aligned <- rep(NA_integer_, length(level_1))
-  valid <- !is.na(level_1)
+  parent_of_module <- seq_len(n_mod)
 
-  for (lv in unique(level_1[valid])) {
-    idx <- which(level_1 == lv)
-    tab <- table(final_module[idx])
-    level_1_aligned[idx] <- as.integer(names(tab)[which.max(tab)])
+  if (n_mod > 1 && ecount(graph) > 0) {
+    edge_ends <- ends(graph, E(graph), names = FALSE)
+
+    module_edges <- cbind(
+      final_module[edge_ends[, 1]],
+      final_module[edge_ends[, 2]]
+    )
+
+    module_edges <- module_edges[
+      module_edges[, 1] != module_edges[, 2],
+      ,
+      drop = FALSE
+    ]
+
+    if (nrow(module_edges) > 0) {
+      module_graph <- make_empty_graph(
+        n = n_mod,
+        directed = is_directed(graph)
+      )
+
+      module_graph <- add_edges(
+        module_graph,
+        as.vector(t(module_edges))
+      )
+
+      E(module_graph)$weight <- rep(1, ecount(module_graph))
+
+      module_graph <- simplify(
+        module_graph,
+        edge.attr.comb = list(weight = "sum", "ignore")
+      )
+
+      parent_res <- community_infomap_impl(
+        module_graph,
+        E(module_graph)$weight,
+        NULL,
+        nb.trials
+      )
+
+      parent_of_module <- parent_res$membership + 1
+    }
   }
 
-  res$multilevel_modules[, 2] <- level_1_aligned
-  colnames(res$multilevel_modules) <- c("node_id", "level_1", "final_module")
+  res$multilevel_modules[, 1] <- seq_len(vcount(graph))
+  res$multilevel_modules[, 2] <- parent_of_module[final_module]
+  res$multilevel_modules[, 3] <- final_module
+  res$multilevel_modules[, 4] <- final_module
+
+  colnames(res$multilevel_modules) <- c(
+    "node_id",
+    "level_1",
+    "level_2",
+    "final_module"
+  )
+
+  res$num_levels <- 3L
 }
 
   if (modularity) {

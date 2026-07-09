@@ -12659,6 +12659,7 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
   igraph_integer_t c_nb_trials;
   igraph_vector_int_t c_membership;
   igraph_vector_int_t c_level_1_membership;
+  igraph_vector_int_t c_level_2_membership;
   igraph_real_t c_codelength;
   igraph_integer_t no_of_nodes;
   igraph_integer_t i;
@@ -12687,6 +12688,9 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
   IGRAPH_R_CHECK(igraph_vector_int_init(&c_level_1_membership, 0));
   IGRAPH_FINALLY(igraph_vector_int_destroy, &c_level_1_membership);
 
+  IGRAPH_R_CHECK(igraph_vector_int_init(&c_level_2_membership, 0));
+  IGRAPH_FINALLY(igraph_vector_int_destroy, &c_level_2_membership);
+
                                         /* Call igraph */
   IGRAPH_R_CHECK(igraph_community_infomap(
     &c_graph,
@@ -12695,6 +12699,7 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
     c_nb_trials,
     &c_membership,
     &c_level_1_membership,
+    &c_level_2_membership,
     &c_codelength
   ));
 
@@ -12706,10 +12711,11 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
 
   no_of_nodes = igraph_vector_int_size(&c_membership);
 
-  PROTECT(multilevel_modules = Rf_allocMatrix(INTSXP, (int) no_of_nodes, 3));
+  PROTECT(multilevel_modules = Rf_allocMatrix(INTSXP, (int) no_of_nodes, 4));
 
   for (i = 0; i < no_of_nodes; i++) {
     igraph_integer_t level_1_value = VECTOR(c_level_1_membership)[i];
+    igraph_integer_t level_2_value = VECTOR(c_level_2_membership)[i];
 
     /* Column 1: node_id */
     INTEGER(multilevel_modules)[i] = (int) i + 1;
@@ -12721,19 +12727,27 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
       INTEGER(multilevel_modules)[i + no_of_nodes] = NA_INTEGER;
     }
 
-    /* Column 3: final_module */
-    INTEGER(multilevel_modules)[i + 2 * no_of_nodes] = (int) VECTOR(c_membership)[i] + 1;
+    /* Column 3: level_2 */
+    if (level_2_value >= 0) {
+      INTEGER(multilevel_modules)[i + 2 * no_of_nodes] = (int) level_2_value + 1;
+    } else {
+      INTEGER(multilevel_modules)[i + 2 * no_of_nodes] = NA_INTEGER;
+    }
+
+    /* Column 4: final_module */
+    INTEGER(multilevel_modules)[i + 3 * no_of_nodes] = (int) VECTOR(c_membership)[i] + 1;
   }
 
   igraph_vector_int_destroy(&c_membership);
   igraph_vector_int_destroy(&c_level_1_membership);
-  IGRAPH_FINALLY_CLEAN(2);
+  igraph_vector_int_destroy(&c_level_2_membership);
+  IGRAPH_FINALLY_CLEAN(3);
 
   PROTECT(codelength = NEW_NUMERIC(1));
   REAL(codelength)[0] = c_codelength;
-  
+
   PROTECT(num_levels = NEW_INTEGER(1));
-  INTEGER(num_levels)[0] = 2; 
+  INTEGER(num_levels)[0] = 3;
 
   SET_VECTOR_ELT(r_result, 0, membership);
   SET_VECTOR_ELT(r_result, 1, codelength);
@@ -12747,8 +12761,7 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
 
   SET_NAMES(r_result, r_names);
 
-  UNPROTECT(5);
-  UNPROTECT(1);
+  UNPROTECT(6);
 
   return(r_result);
 }

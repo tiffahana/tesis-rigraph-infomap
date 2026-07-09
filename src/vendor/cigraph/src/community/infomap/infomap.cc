@@ -102,16 +102,46 @@ static igraph_error_t infomap_partition(FlowGraph &fgraph, bool rcall) {
                         // recursif call of partitionment on the subgraph
                         infomap_partition(sub_fgraph, true);
 
-                        // Record membership changes
+                        // Record membership changes and experimental hierarchy level
                         for (igraph_integer_t j = 0; j < sub_fgraph.Nnode; j++) {
                             for (const auto &v : sub_fgraph.node[j].members) {
-                                subMoveTo[sub_members[v]] = subModIndex;
+                                igraph_integer_t orig_v = sub_members[v];
+
+                                subMoveTo[orig_v] = subModIndex;
+
+                                // Experimental hierarchy capture:
+                                // level_1 = parent module at current partition
+                                // level_2 = submodule found inside that parent module
+                                if (orig_v >= 0 &&
+                                    orig_v < (igraph_integer_t) cpy_fgraph.level_1_membership.size()) {
+                                    cpy_fgraph.level_1_membership[orig_v] = i;
+                                }
+
+                                if (orig_v >= 0 &&
+                                    orig_v < (igraph_integer_t) cpy_fgraph.level_2_membership.size()) {
+                                    cpy_fgraph.level_2_membership[orig_v] = subModIndex;
+                                }
                             }
+
                             initial_move[subModIndex] = i;
                             subModIndex++;
                         }
                     } else {
-                        subMoveTo[fgraph.node[i].members[0]] = subModIndex;
+                        igraph_integer_t orig_v = fgraph.node[i].members[0];
+
+                        subMoveTo[orig_v] = subModIndex;
+
+                        // Experimental hierarchy capture for trivial module
+                        if (orig_v >= 0 &&
+                            orig_v < (igraph_integer_t) cpy_fgraph.level_1_membership.size()) {
+                            cpy_fgraph.level_1_membership[orig_v] = i;
+                        }
+
+                        if (orig_v >= 0 &&
+                            orig_v < (igraph_integer_t) cpy_fgraph.level_2_membership.size()) {
+                            cpy_fgraph.level_2_membership[orig_v] = subModIndex;
+                        }
+
                         initial_move[subModIndex] = i;
                         subModIndex++;
                     }
@@ -245,6 +275,7 @@ igraph_error_t igraph_community_infomap(const igraph_t * graph,
                              igraph_integer_t nb_trials,
                              igraph_vector_int_t *membership,
                              igraph_vector_int_t *level_1_membership,
+                             igraph_vector_int_t *level_2_membership,
                              igraph_real_t *codelength) {
 
     IGRAPH_HANDLE_EXCEPTIONS_BEGIN;
@@ -298,6 +329,13 @@ igraph_error_t igraph_community_infomap(const igraph_t * graph,
         }
     }
 
+    if (level_2_membership) {
+        IGRAPH_CHECK(igraph_vector_int_resize(level_2_membership, Nnode));
+        for (igraph_integer_t i = 0; i < Nnode; i++) {
+            VECTOR(*level_2_membership)[i] = -1;
+        }
+    }
+
     for (igraph_integer_t trial = 0; trial < nb_trials; trial++) {
         FlowGraph cpy_fgraph(fgraph);
 
@@ -324,6 +362,42 @@ igraph_error_t igraph_community_infomap(const igraph_t * graph,
                     }
                 }
             }
+            
+            if (level_2_membership) {
+                igraph_integer_t submodule_counter = 0;
+
+                for (igraph_integer_t i = 0; i < cpy_fgraph.Nnode; i++) {
+                    const std::vector<igraph_integer_t> &sub_members = cpy_fgraph.node[i].members;
+
+                    if (sub_members.size() > 1) {
+                        FlowGraph sub_fgraph(fgraph, sub_members);
+                        sub_fgraph.initiate();
+
+                        IGRAPH_CHECK(infomap_partition(sub_fgraph, true));
+
+                        for (igraph_integer_t j = 0; j < sub_fgraph.Nnode; j++) {
+                            for (const auto &v : sub_fgraph.node[j].members) {
+                                igraph_integer_t orig_v = sub_members[v];
+
+                                if (orig_v >= 0 && orig_v < Nnode) {
+                                    VECTOR(*level_2_membership)[orig_v] = submodule_counter;
+                                }
+                            }
+
+                            submodule_counter++;
+                        }
+                    } else if (sub_members.size() == 1) {
+                        igraph_integer_t orig_v = sub_members[0];
+
+                        if (orig_v >= 0 && orig_v < Nnode) {
+                            VECTOR(*level_2_membership)[orig_v] = submodule_counter;
+                        }
+
+                        submodule_counter++;
+                    }
+                }
+            }
+
         }
     }
 

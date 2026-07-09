@@ -67,6 +67,10 @@ public:
     /* Experimental: stores the first captured module assignment for each node */
     std::vector<igraph_integer_t> level_1_membership;
 
+    /* Experimental: stores the second captured module assignment for each node */
+    std::vector<igraph_integer_t> level_2_membership;
+
+
     double alpha, beta;
 
     igraph_integer_t Ndanglings;
