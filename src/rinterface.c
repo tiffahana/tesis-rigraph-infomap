@@ -12666,6 +12666,7 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
   SEXP membership;
   SEXP codelength;
   SEXP multilevel_modules;
+  SEXP num_levels;
   SEXP r_result, r_names;
 
                                         /* Convert input */
@@ -12698,8 +12699,8 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
   ));
 
                                         /* Convert output */
-  PROTECT(r_result = NEW_LIST(3));
-  PROTECT(r_names = NEW_CHARACTER(3));
+  PROTECT(r_result = NEW_LIST(4));
+  PROTECT(r_names = NEW_CHARACTER(4));
 
   PROTECT(membership = Ry_igraph_vector_int_to_SEXP(&c_membership));
 
@@ -12730,18 +12731,23 @@ SEXP R_igraph_community_infomap(SEXP graph, SEXP e_weights, SEXP v_weights, SEXP
 
   PROTECT(codelength = NEW_NUMERIC(1));
   REAL(codelength)[0] = c_codelength;
+  
+  PROTECT(num_levels = NEW_INTEGER(1));
+  INTEGER(num_levels)[0] = 2; 
 
   SET_VECTOR_ELT(r_result, 0, membership);
   SET_VECTOR_ELT(r_result, 1, codelength);
   SET_VECTOR_ELT(r_result, 2, multilevel_modules);
+  SET_VECTOR_ELT(r_result, 3, num_levels);
 
   SET_STRING_ELT(r_names, 0, Rf_mkChar("membership"));
   SET_STRING_ELT(r_names, 1, Rf_mkChar("codelength"));
   SET_STRING_ELT(r_names, 2, Rf_mkChar("multilevel_modules"));
+  SET_STRING_ELT(r_names, 3, Rf_mkChar("num_levels"));
 
   SET_NAMES(r_result, r_names);
 
-  UNPROTECT(4);
+  UNPROTECT(5);
   UNPROTECT(1);
 
   return(r_result);

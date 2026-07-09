@@ -2707,6 +2707,24 @@ cluster_infomap <- function(
   res$vcount <- vcount(graph)
   res$algorithm <- "infomap"
   res$membership <- res$membership + 1
+
+  if (!is.null(res$multilevel_modules) && ncol(res$multilevel_modules) >= 3) {
+  level_1 <- res$multilevel_modules[, 2]
+  final_module <- res$multilevel_modules[, 3]
+
+  level_1_aligned <- rep(NA_integer_, length(level_1))
+  valid <- !is.na(level_1)
+
+  for (lv in unique(level_1[valid])) {
+    idx <- which(level_1 == lv)
+    tab <- table(final_module[idx])
+    level_1_aligned[idx] <- as.integer(names(tab)[which.max(tab)])
+  }
+
+  res$multilevel_modules[, 2] <- level_1_aligned
+  colnames(res$multilevel_modules) <- c("node_id", "level_1", "final_module")
+}
+
   if (modularity) {
     res$modularity <- modularity(graph, res$membership, weights = e.weights)
   }
