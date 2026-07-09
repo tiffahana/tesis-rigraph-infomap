@@ -2708,68 +2708,155 @@ cluster_infomap <- function(
   res$algorithm <- "infomap"
   res$membership <- res$membership + 1
 
-if (!is.null(res$multilevel_modules) && ncol(res$multilevel_modules) >= 4) {
-  final_module <- res$membership
-  n_mod <- max(final_module)
+if (!is.null(res$multilevel_modules)) {
+  compact_labels_local <- function(x) {
+    valid <- !is.na(x)
+    out <- rep(NA_integer_, length(x))
+    vals <- unique(x[valid])
 
-  parent_of_module <- seq_len(n_mod)
+    for (i in seq_along(vals)) {
+      out[x == vals[i]] <- i
+    }
 
-  if (n_mod > 1 && ecount(graph) > 0) {
-    edge_ends <- ends(graph, E(graph), names = FALSE)
+    out
+  }
 
-    module_edges <- cbind(
-      final_module[edge_ends[, 1]],
-      final_module[edge_ends[, 2]]
+  same_partition_local <- function(x, y) {
+    if (length(x) != length(y)) {
+      return(FALSE)
+    }
+
+    x_to_y <- vapply(
+      split(y, x),
+      function(z) length(unique(z)) == 1L,
+      logical(1)
     )
 
+    y_to_x <- vapply(
+      split(x, y),
+      function(z) length(unique(z)) == 1L,
+      logical(1)
+    )
+
+    all(x_to_y) && all(y_to_x)
+  }
+
+  build_module_graph_local <- function(graph, groups, edge_weights = NULL) {
+    groups <- compact_labels_local(groups)
+    n_mod <- max(groups, na.rm = TRUE)
+
+    module_graph <- make_empty_graph(
+      n = n_mod,
+      directed = is_directed(graph)
+    )
+
+    if (ecount(graph) == 0 || n_mod <= 1) {
+      return(module_graph)
+    }
+
+    edge_ends <- ends(graph, E(graph), names = FALSE)
+
+    if (is.null(edge_weights)) {
+      edge_weights <- rep(1, nrow(edge_ends))
+    }
+
+    module_edges <- cbind(
+      groups[edge_ends[, 1]],
+      groups[edge_ends[, 2]]
+    )
+
+    keep <- module_edges[, 1] != module_edges[, 2]
+
     module_edges <- module_edges[
-      module_edges[, 1] != module_edges[, 2],
+      keep,
       ,
       drop = FALSE
     ]
 
-    if (nrow(module_edges) > 0) {
-      module_graph <- make_empty_graph(
-        n = n_mod,
-        directed = is_directed(graph)
-      )
+    edge_weights <- edge_weights[keep]
 
-      module_graph <- add_edges(
-        module_graph,
-        as.vector(t(module_edges))
-      )
+    if (nrow(module_edges) == 0) {
+      return(module_graph)
+    }
 
-      E(module_graph)$weight <- rep(1, ecount(module_graph))
+    module_graph <- add_edges(
+      module_graph,
+      as.vector(t(module_edges))
+    )
 
-      module_graph <- simplify(
-        module_graph,
-        edge.attr.comb = list(weight = "sum", "ignore")
-      )
+    E(module_graph)$weight <- edge_weights
 
-      parent_res <- community_infomap_impl(
-        module_graph,
-        E(module_graph)$weight,
-        NULL,
-        nb.trials
-      )
+    module_graph <- simplify(
+      module_graph,
+      edge.attr.comb = list(weight = "sum", "ignore")
+    )
 
-      parent_of_module <- parent_res$membership + 1
+    module_graph
+  }
+
+  final_module <- compact_labels_local(res$membership)
+
+  levels_bottom_up <- list()
+  levels_bottom_up[[1]] <- final_module
+
+  current_level <- final_module
+  max_levels <- 6L
+
+  original_edge_weights <- NULL
+  if (!is.null(e.weights)) {
+    original_edge_weights <- e.weights
+  }
+
+  for (step in seq_len(max_levels - 1L)) {
+    module_graph <- build_module_graph_local(
+      graph,
+      current_level,
+      edge_weights = original_edge_weights
+    )
+
+    if (vcount(module_graph) <= 1 || ecount(module_graph) == 0) {
+      break
+    }
+
+    parent_res <- community_infomap_impl(
+      module_graph,
+      E(module_graph)$weight,
+      NULL,
+      nb.trials
+    )
+
+    parent_of_module <- compact_labels_local(parent_res$membership + 1)
+    parent_level <- parent_of_module[current_level]
+    parent_level <- compact_labels_local(parent_level)
+
+    if (same_partition_local(parent_level, current_level)) {
+      break
+    }
+
+    levels_bottom_up[[length(levels_bottom_up) + 1L]] <- parent_level
+    current_level <- parent_level
+
+    if (length(unique(current_level)) == 1L) {
+      break
     }
   }
 
-  res$multilevel_modules[, 1] <- seq_len(vcount(graph))
-  res$multilevel_modules[, 2] <- parent_of_module[final_module]
-  res$multilevel_modules[, 3] <- final_module
-  res$multilevel_modules[, 4] <- final_module
+  levels_top_down <- rev(levels_bottom_up)
 
-  colnames(res$multilevel_modules) <- c(
-    "node_id",
-    "level_1",
-    "level_2",
-    "final_module"
+  multilevel_df <- data.frame(
+    node_id = seq_len(vcount(graph))
   )
 
-  res$num_levels <- 3L
+  for (i in seq_along(levels_top_down)) {
+    multilevel_df[[paste0("level_", i)]] <- levels_top_down[[i]]
+  }
+
+  multilevel_df$final_module <- final_module
+
+  res$multilevel_modules <- as.matrix(multilevel_df)
+  storage.mode(res$multilevel_modules) <- "integer"
+
+  res$num_levels <- as.integer(ncol(res$multilevel_modules) - 1L)
 }
 
   if (modularity) {
