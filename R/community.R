@@ -2857,6 +2857,23 @@ if (!is.null(res$multilevel_modules)) {
   storage.mode(res$multilevel_modules) <- "integer"
 
   res$num_levels <- as.integer(ncol(res$multilevel_modules) - 1L)
+  
+  level_cols <- grep(
+  "^level_",
+  colnames(res$multilevel_modules),
+  value = TRUE
+)
+
+if (length(level_cols) > 0L) {
+  res$num_top_modules <- as.integer(
+    length(unique(res$multilevel_modules[, level_cols[1L]]))
+  )
+
+  res$max_tree_depth <- as.integer(length(level_cols))
+} else {
+  res$num_top_modules <- NA_integer_
+  res$max_tree_depth <- 0L
+}
 }
 
   if (modularity) {
