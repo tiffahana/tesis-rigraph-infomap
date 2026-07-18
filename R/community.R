@@ -2865,13 +2865,44 @@ if (!is.null(res$multilevel_modules)) {
 )
 
 if (length(level_cols) > 0L) {
-  res$num_top_modules <- as.integer(
-    length(unique(res$multilevel_modules[, level_cols[1L]]))
+
+  # Contar módulos distintos en cada nivel,
+  # ignorando valores NA.
+  modules_per_level <- vapply(
+    level_cols,
+    function(level_col) {
+      values <- res$multilevel_modules[, level_col, drop = TRUE]
+      values <- values[!is.na(values)]
+
+      length(unique(values))
+    },
+    integer(1L)
   )
 
+  # Buscar el primer nivel donde exista una división real.
+  nontrivial_levels <- which(modules_per_level > 1L)
+
+  if (length(nontrivial_levels) > 0L) {
+    first_split <- nontrivial_levels[1L]
+
+    res$num_top_modules <- as.integer(
+      modules_per_level[first_split]
+    )
+
+    # Campo opcional para saber qué nivel se utilizó.
+    res$top_module_level <- level_cols[first_split]
+
+  } else {
+    # No se encontró una división jerárquica.
+    res$num_top_modules <- 1L
+    res$top_module_level <- level_cols[1L]
+  }
+
   res$max_tree_depth <- as.integer(length(level_cols))
+
 } else {
   res$num_top_modules <- NA_integer_
+  res$top_module_level <- NA_character_
   res$max_tree_depth <- 0L
 }
 }
