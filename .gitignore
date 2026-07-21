@@ -32,3 +32,6 @@ cran
 /.build/
 .ccache/
 lifecycle
+
+# Artefacto local de compilación en Windows
+/src/igraph.dll
