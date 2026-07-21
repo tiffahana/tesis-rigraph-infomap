@@ -1,0 +1,29 @@
+IDENTIFICACION DE LA VERSION DEL PROTOTIPO
+==========================================
+
+Repositorio local:
+<raiz_del_repositorio>
+
+Repositorio remoto:
+https://github.com/tiffahana/tesis-rigraph-infomap.git
+
+Rama activa:
+campos-resumen-jerarquia
+
+Version del paquete:
+2.3.2.9015
+
+Commit actual:
+  Abreviado: e7afe39
+  Completo:  e7afe39b2f985311025e95f962f92a0c6b253ef7
+  Fecha:     2026-07-18T05:38:20-04:00
+  Autor:     Daniela
+  Mensaje:   Agrega scripts de validacion y figuras de jerarquia multinivel
+
+Estado del repositorio:
+SIN CAMBIOS RASTREADOS PENDIENTES
+
+RESULTADO: VERSION DEL PROTOTIPO IDENTIFICADA CORRECTAMENTE
+
+
+

@@ -1,0 +1,33 @@
+﻿RED ARTIFICIAL JERÁRQUICA LFR
+
+Fecha de generación: 2026-07-16 02:29:14
+Generador: LFRbenchmarks / hierarchical
+Ejecutable: hbenchmark.exe
+
+PARÁMETROS
+N = 1000
+k = 20
+maxk = 50
+mu1 = 0.10
+mu2 = 0.30
+minc = 20
+maxc = 50
+minC = 100
+maxC = 300
+Nodos superpuestos = 0
+Membresías por nodo superpuesto = 0
+
+RESULTADOS GENERADOS
+Nodos = 1000
+Aristas únicas = 9867
+Microcomunidades = 26
+Macrocomunidades = 5
+Semilla utilizada en la generación = 21111983
+Valor posterior almacenado en time_seed.dat = 21111984
+
+ARCHIVOS
+network.dat
+community_first_level.dat
+community_second_level.dat
+flags_tesis.dat
+time_seed.dat

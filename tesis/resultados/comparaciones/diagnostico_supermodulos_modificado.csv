@@ -1,0 +1,6 @@
+"red","nodos_originales","aristas_originales","dirigida_original","componentes_originales","nodos_usados","aristas_usadas","comunidades_finales","num_levels","num_top_modules","max_tree_depth","codelength","modularity","final_module_ok","hierarchical_codelength_presente","tiene_supermodulos","tiene_multinivel"
+"Zachary",34,78,FALSE,1,34,78,3,3,1,2,4.60605861235007,0.402038132807364,TRUE,FALSE,FALSE,TRUE
+"USairports",755,23473,TRUE,6,745,4618,52,4,1,3,7.07354442740251,0.268284845247899,TRUE,FALSE,FALSE,TRUE
+"enron",184,125409,TRUE,3,182,2097,12,3,1,2,5.94766880272294,0.629031196632374,TRUE,FALSE,FALSE,TRUE
+"UKfaculty",81,817,TRUE,1,81,577,8,3,1,2,5.41463093459978,0.55698244075642,TRUE,FALSE,FALSE,TRUE
+"yeast",2617,11855,FALSE,92,2375,11693,203,4,1,3,7.7376215418361,0.67519099423257,TRUE,FALSE,FALSE,TRUE

@@ -1,0 +1,78 @@
+====================================
+DIAGNOSTICO DE SUPERMODULOS - IGRAPH MODIFICADO
+====================================
+
+         red nodos_originales aristas_originales dirigida_original
+1    Zachary               34                 78             FALSE
+2 USairports              755              23473              TRUE
+3      enron              184             125409              TRUE
+4  UKfaculty               81                817              TRUE
+5      yeast             2617              11855             FALSE
+  componentes_originales nodos_usados aristas_usadas comunidades_finales
+1                      1           34             78                   3
+2                      6          745           4618                  52
+3                      3          182           2097                  12
+4                      1           81            577                   8
+5                     92         2375          11693                 203
+  num_levels num_top_modules max_tree_depth codelength modularity
+1          3               1              2   4.606059  0.4020381
+2          4               1              3   7.073544  0.2682848
+3          3               1              2   5.947669  0.6290312
+4          3               1              2   5.414631  0.5569824
+5          4               1              3   7.737622  0.6751910
+  final_module_ok hierarchical_codelength_presente tiene_supermodulos
+1            TRUE                            FALSE              FALSE
+2            TRUE                            FALSE              FALSE
+3            TRUE                            FALSE              FALSE
+4            TRUE                            FALSE              FALSE
+5            TRUE                            FALSE              FALSE
+  tiene_multinivel
+1             TRUE
+2             TRUE
+3             TRUE
+4             TRUE
+5             TRUE
+
+Redes con supermodulos:
+ [1] red                              nodos_originales                
+ [3] aristas_originales               dirigida_original               
+ [5] componentes_originales           nodos_usados                    
+ [7] aristas_usadas                   comunidades_finales             
+ [9] num_levels                       num_top_modules                 
+[11] max_tree_depth                   codelength                      
+[13] modularity                       final_module_ok                 
+[15] hierarchical_codelength_presente tiene_supermodulos              
+[17] tiene_multinivel                
+<0 rows> (or 0-length row.names)
+
+Redes con estructura multinivel:
+         red nodos_originales aristas_originales dirigida_original
+1    Zachary               34                 78             FALSE
+2 USairports              755              23473              TRUE
+3      enron              184             125409              TRUE
+4  UKfaculty               81                817              TRUE
+5      yeast             2617              11855             FALSE
+  componentes_originales nodos_usados aristas_usadas comunidades_finales
+1                      1           34             78                   3
+2                      6          745           4618                  52
+3                      3          182           2097                  12
+4                      1           81            577                   8
+5                     92         2375          11693                 203
+  num_levels num_top_modules max_tree_depth codelength modularity
+1          3               1              2   4.606059  0.4020381
+2          4               1              3   7.073544  0.2682848
+3          3               1              2   5.947669  0.6290312
+4          3               1              2   5.414631  0.5569824
+5          4               1              3   7.737622  0.6751910
+  final_module_ok hierarchical_codelength_presente tiene_supermodulos
+1            TRUE                            FALSE              FALSE
+2            TRUE                            FALSE              FALSE
+3            TRUE                            FALSE              FALSE
+4            TRUE                            FALSE              FALSE
+5            TRUE                            FALSE              FALSE
+  tiene_multinivel
+1             TRUE
+2             TRUE
+3             TRUE
+4             TRUE
+5             TRUE

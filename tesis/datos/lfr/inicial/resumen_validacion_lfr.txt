@@ -1,0 +1,23 @@
+VALIDACIÓN DEL PROTOTIPO CON RED LFR
+
+Nodos: 1000
+Aristas: 9867
+Macrocomunidades conocidas: 5
+Microcomunidades conocidas: 26
+
+Primer nivel con división real: level_2
+Módulos superiores detectados: 16
+Comunidades finales detectadas: 16
+Nivel superior coincide con final_module: TRUE
+
+NMI macro: 0.786508867845465
+ARI macro: 0.653963009909763
+NMI micro: 0.866985230510594
+ARI micro: 0.503103299097433
+
+Codelength: 8.69721243975583
+Modularity: 0.64101178490381
+num_levels: 3
+num_top_modules: 16
+top_module_level: level_2
+max_tree_depth: 2

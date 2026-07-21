@@ -1,0 +1,16 @@
+RESULTADO MULTINIVEL DE USAIRPORTS
+=================================
+
+Archivo utilizado:
+<raiz_del_repositorio>/tesis/resultados/comparaciones/USairports_multilevel_modules_modificado.csv 
+
+Cantidad de nodos: 745 
+MÃ³dulos superiores en level_2: 5 
+Comunidades finales: 52 
+
+ modulo_superior nodos comunidades_finales_agrupadas
+               1   505                            34
+               2   120                            10
+               3    35                             2
+               4    56                             3
+               5    29                             3

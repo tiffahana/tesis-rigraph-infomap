@@ -1,0 +1,26 @@
+VALIDACION DEL PROTOTIPO MULTINIVEL
+==================================
+
+R: R version 4.6.0 (2026-04-24 ucrt) 
+igraph: 2.3.2.9015 
+Ruta de igraph: <biblioteca_R>/igraph 
+
+Clase del resultado: communities 
+Campos multinivel presentes: TRUE 
+  multilevel_modules: PRESENTE
+  num_levels: PRESENTE
+  num_top_modules: PRESENTE
+  top_module_level: PRESENTE
+  max_tree_depth: PRESENTE
+
+Valores de resumen:
+  num_levels = 4 
+  num_top_modules = 6 
+  top_module_level = level_2 
+  max_tree_depth = 3 
+
+Clase de multilevel_modules: matrix, array 
+Cantidad de filas: 5000 
+final_module coincide con membership(): TRUE 
+
+RESULTADO: PRUEBA COMPLETADA CORRECTAMENTE

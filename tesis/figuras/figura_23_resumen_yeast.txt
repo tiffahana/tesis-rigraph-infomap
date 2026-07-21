@@ -1,0 +1,26 @@
+RESULTADO MULTINIVEL DE YEAST
+=============================
+
+Archivo utilizado:
+<raiz_del_repositorio>/tesis/resultados/comparaciones/yeast_multilevel_modules_modificado_500.csv 
+
+Cantidad de nodos: 2375 
+MÃ³dulos superiores en level_2: 15 
+Comunidades finales: 203 
+
+ modulo_superior nodos comunidades_finales_agrupadas
+               1   168                            15
+               2   139                            13
+               3  1217                            89
+               4    22                             3
+               5    98                            11
+               6    74                             7
+               7   286                            23
+               8    62                             7
+               9    73                            10
+              10    40                             3
+              11    83                             8
+              12    32                             3
+              13    37                             5
+              14    19                             3
+              15    25                             3

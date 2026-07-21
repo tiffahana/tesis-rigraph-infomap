@@ -1,0 +1,23 @@
+VERIFICACIÃƒâ€œN DE LA SALIDA MULTINIVEL DEL PROTOTIPO
+=================================================
+
+VersiÃƒÂ³n de igraph: 2.3.2.9015 
+Clase del objeto: communities 
+
+Campos incorporados:
+  multilevel_modules   PRESENTE
+  num_levels           PRESENTE
+  num_top_modules      PRESENTE
+  top_module_level     PRESENTE
+  max_tree_depth       PRESENTE
+
+Valores de resumen jerÃƒÂ¡rquico:
+  num_levels       = 4 
+  num_top_modules  = 6 
+  top_module_level = level_2 
+  max_tree_depth   = 3 
+
+Compatibilidad:
+  final_module coincide con membership() = TRUE 
+  modularity() continÃƒÂºa disponible       = TRUE 
+  hierarchical_codelength incorporado    = FALSE 

@@ -1,0 +1,22 @@
+ARCHIVOS GENERADOS POR EL BENCHMARK LFR
+=======================================
+
+Carpeta seleccionada:
+<raiz_del_repositorio>/tesis/datos/lfr 
+
+                    Archivo
+                network.dat
+  community_first_level.dat
+ community_second_level.dat
+              time_seed.dat
+                  flags.dat
+            flags_tesis.dat
+  flags_tesis_jerarquia.dat
+                                            Contenido Registros TamaÃ±o (KB)
+        Lista de aristas que define la red artificial     97262      1004.2
+ Pertenencia conocida de los nodos a microcomunidades      5000        49.1
+ Pertenencia conocida de los nodos a macrocomunidades      5000        38.0
+    Semilla temporal registrada durante la generaciÃ³n         1         0.0
+          Archivo auxiliar producido por el benchmark         9         0.1
+          Archivo auxiliar producido por el benchmark         9         0.1
+          Archivo auxiliar producido por el benchmark         9         0.1

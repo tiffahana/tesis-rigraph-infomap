@@ -1,0 +1,8 @@
+"Archivo","Contenido","Registros","Tamaño (KB)"
+"network.dat","Lista de aristas que define la red artificial",97262,1004.2
+"community_first_level.dat","Pertenencia conocida de los nodos a microcomunidades",5000,49.1
+"community_second_level.dat","Pertenencia conocida de los nodos a macrocomunidades",5000,38
+"time_seed.dat","Semilla temporal registrada durante la generación",1,0
+"flags.dat","Archivo auxiliar producido por el benchmark",9,0.1
+"flags_tesis.dat","Archivo auxiliar producido por el benchmark",9,0.1
+"flags_tesis_jerarquia.dat","Archivo auxiliar producido por el benchmark",9,0.1

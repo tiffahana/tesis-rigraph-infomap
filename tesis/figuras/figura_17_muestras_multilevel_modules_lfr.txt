@@ -1,0 +1,42 @@
+MUESTRAS DE LA ESTRUCTURA MULTILEVEL_MODULES EN LA RED LFR
+==========================================================
+
+Dimensiones del resultado completo:
+  Nodos    = 5000 
+  Columnas = 5 
+  MÃƒÂ³dulos superiores distintos en level_2 = 6 
+
+MUESTRA 1: PRIMERAS 10 FILAS
+----------------------------
+ node_id level_1 level_2 level_3 final_module
+       1       1       1       1            1
+       2       1       1       2            2
+       3       1       1       3            3
+       4       1       1       4            4
+       5       1       1       5            5
+       6       1       1       6            6
+       7       1       1       7            7
+       8       1       1       8            8
+       9       1       1       9            9
+      10       1       1       6            6
+
+
+MUESTRA 2: 10 FILAS REPRESENTATIVAS DE LA JERARQUÃƒÂA
+--------------------------------------------------
+ node_id level_1 level_2 level_3 final_module
+       1       1       1       1            1
+       2       1       1       2            2
+     991       1       2      32           32
+     992       1       2      33           33
+    1874       1       3      57           57
+    1875       1       3      58           58
+    2847       1       4      86           86
+    2848       1       4      87           87
+    3568       1       5     107          107
+    4334       1       6     130          130
+
+InterpretaciÃƒÂ³n:
+  level_1      = raÃƒÂ­z comÃƒÂºn de la jerarquÃƒÂ­a
+  level_2      = mÃƒÂ³dulos superiores (1 a 6)
+  level_3      = mÃƒÂ³dulos inferiores
+  final_module = comunidad final compatible con membership()

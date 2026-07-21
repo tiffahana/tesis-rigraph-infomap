@@ -1,0 +1,14 @@
+COMPARACIÃ“N ENTRE IGRAPH ORIGINAL E IGRAPH MODIFICADO
+====================================================
+
+                 red igraph_original igraph_modificado misma_particion
+ Zachary Karate Club               3                 3              SÃ­
+          USairports              52                52              SÃ­
+               Yeast             201               203              No
+                    interpretacion
+        Resultado final conservado
+        Resultado final conservado
+ Resultado comparable, no idÃ©ntico
+
+Zachary y USairports conservaron la misma particiÃ³n final.
+Yeast presentÃ³ una diferencia de dos comunidades finales, con calidad comparable pero sin equivalencia exacta.

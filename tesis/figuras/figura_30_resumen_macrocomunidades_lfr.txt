@@ -1,0 +1,16 @@
+DISTRIBUCIÃ“N CONOCIDA DE MACROCOMUNIDADES LFR
+============================================
+
+Archivo utilizado:
+<raiz_del_repositorio>/tesis/datos/lfr/community_second_level.dat 
+
+Cantidad total de nodos: 5000 
+Cantidad de macrocomunidades: 6 
+
+ macrocomunidad cantidad_nodos
+              1            990
+              2            883
+              3            973
+              4            721
+              5            766
+              6            667

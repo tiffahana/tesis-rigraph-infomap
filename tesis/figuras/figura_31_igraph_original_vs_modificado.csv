@@ -1,0 +1,4 @@
+"red","igraph_original","igraph_modificado","misma_particion","interpretacion"
+"Zachary Karate Club",3,3,"Sí","Resultado final conservado"
+"USairports",52,52,"Sí","Resultado final conservado"
+"Yeast",201,203,"No","Resultado comparable, no idéntico"

@@ -1,0 +1,4 @@
+"red","nodos_usados","aristas_usadas","comunidades_modificado","comunidades_oficial","misma_cantidad_comunidades","membership_exactamente_igual","misma_particion_oficial_vs_modificado","codelength_modificado","codelength_oficial","diferencia_codelength","num_levels_modificado","num_levels_oficial","num_top_modules_modificado","num_top_modules_oficial","num_non_trivial_top_modules_oficial","max_tree_depth_modificado","max_tree_depth_oficial","hierarchical_codelength_presente_modificado","hierarchical_codelength_oficial"
+"USairports",745,4618,52,5,FALSE,FALSE,FALSE,7.07354442740251,6.5251475445216,0.548396882880914,4,3,1,5,5,3,3,FALSE,6.5251475445216
+"yeast",2375,11693,203,12,FALSE,FALSE,FALSE,7.7376215418361,6.97652175799475,0.761099783841352,4,3,1,12,12,3,4,FALSE,6.97652175799475
+"Zachary",34,78,3,3,TRUE,TRUE,TRUE,4.60605861235007,4.31179264580183,0.294265966548242,3,2,1,3,3,2,2,FALSE,4.31179264580183

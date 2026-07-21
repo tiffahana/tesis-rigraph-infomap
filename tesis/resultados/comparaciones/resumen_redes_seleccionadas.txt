@@ -1,0 +1,10 @@
+====================================
+RESUMEN DE REDES SELECCIONADAS
+====================================
+
+         red nodos aristas dirigida ponderada componentes
+1    Zachary    34      78    FALSE     FALSE           1
+2 USairports   755   23473     TRUE     FALSE           6
+3      enron   184  125409     TRUE     FALSE           3
+4  UKfaculty    81     817     TRUE      TRUE           1
+5      yeast  2617   11855    FALSE     FALSE          92

@@ -1,0 +1,14 @@
+RESULTADO MULTINIVEL DE LA RED LFR
+=================================
+
+Archivo de aristas utilizado:
+<raiz_del_repositorio>/tesis/datos/lfr/network.dat 
+
+Archivo RDS utilizado:
+<raiz_del_repositorio>/tesis/datos/lfr/jerarquia_reforzada/resultado_lfr_igraph_modificado.rds 
+
+Nodos: 5000 
+Aristas Ãºnicas: 48631 
+MÃ³dulos superiores en level_2: 6 
+Comunidades finales: 147 
+final_module coincide con membership(): TRUE 

@@ -1,0 +1,39 @@
+ESTRUCTURA DE ARCHIVOS RELEVANTES DEL REPOSITORIO
+================================================
+
+Repositorio: <raiz_del_repositorio>
+
+ARCHIVOS PRINCIPALES
+--------------------
+[F] DESCRIPTION
+[F] NAMESPACE
+[F] README.md
+
+[D] R\
+    [F] R\aaa-community.R
+    [F] R\community.R
+
+[D] src\
+    [F] src\vendor\cigraph\include\igraph_community.h
+    [F] src\vendor\cigraph\src\community\community_internal.h
+    [F] src\vendor\cigraph\src\community\community_misc.c
+    [F] src\vendor\cigraph\src\community\community_misc.o
+    [F] src\vendor\cigraph\src\community\edge_betweenness.c
+    [F] src\vendor\cigraph\src\community\edge_betweenness.o
+    [F] src\vendor\cigraph\src\community\fast_modularity.c
+    [F] src\vendor\cigraph\src\community\fast_modularity.o
+    [F] src\vendor\cigraph\src\community\fluid.c
+    [F] src\vendor\cigraph\src\community\fluid.o
+
+[D] tests\
+    [F] tests\testthat\_snaps\community.md
+    [F] tests\testthat\test-community.R
+
+EVIDENCIAS DE REPRODUCIBILIDAD
+------------------------------
+[F] 22_figura_31_validacion_powershell_v2.R
+[F] 22_figura_31_ejecucion_powershell_v3.ps1
+[F] 23_figura_32_estructura_repositorio_v2.ps1
+[F] 24_figura_33_rama_version_commit.ps1
+
+RESULTADO: ESTRUCTURA FINAL GENERADA CORRECTAMENTE

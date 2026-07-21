@@ -1,0 +1,6 @@
+"red","nodos_originales","aristas_originales","dirigida_original","componentes_originales","nodos_usados","aristas_usadas","comunidades_original","codelength_original","modularity_original"
+"Zachary",34,78,FALSE,1,34,78,3,4.60605861235007,0.402038132807364
+"USairports",755,23473,TRUE,6,745,4618,52,7.07354442740251,0.268284845247899
+"enron",184,125409,TRUE,3,182,2097,12,5.94766880272294,0.629031196632374
+"UKfaculty",81,817,TRUE,1,81,577,8,5.41463093459978,0.55698244075642
+"yeast",2617,11855,FALSE,92,2375,11693,203,7.73828358467006,0.67390320201061

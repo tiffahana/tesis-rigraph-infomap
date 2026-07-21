@@ -1,0 +1,2 @@
+"red","implementacion","nb_trials","nodos_originales","aristas_originales","componentes_originales","nodos_usados","aristas_usadas","comunidades_finales","codelength","modularity","num_levels","num_top_modules","max_tree_depth","final_module_ok","hierarchical_codelength_presente"
+"yeast","igraph_modificado",500,2617,11855,92,2375,11693,203,7.7376215418361,0.67519099423257,4,1,3,TRUE,FALSE

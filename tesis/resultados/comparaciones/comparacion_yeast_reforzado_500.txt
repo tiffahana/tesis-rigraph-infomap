@@ -1,0 +1,29 @@
+====================================
+COMPARACION YEAST REFORZADA - NB.TRIALS 500
+====================================
+
+    red nb_trials nodos_usados_original aristas_usadas_original
+1 yeast       500                  2375                   11693
+  comunidades_original comunidades_modificado misma_cantidad_comunidades
+1                  201                    203                      FALSE
+  membership_exactamente_igual misma_particion codelength_original
+1                        FALSE           FALSE            7.737048
+  codelength_modificado diferencia_codelength modularity_original
+1              7.737622          0.0005734805           0.6750856
+  modularity_modificado diferencia_modularity num_levels num_top_modules
+1              0.675191          0.0001053894          4               1
+  max_tree_depth final_module_ok hierarchical_codelength_presente
+1              3            TRUE                            FALSE
+
+Interpretacion rapida:
+
+- Misma cantidad de comunidades: FALSE 
+- Membership exactamente igual: FALSE 
+- Misma particion: FALSE 
+- Diferencia codelength: 0.0005734805 
+- Diferencia modularity: 0.0001053894 
+- num_levels: 4 
+- num_top_modules: 1 
+- max_tree_depth: 3 
+- final_module_ok: TRUE 
+- hierarchical_codelength presente: FALSE 

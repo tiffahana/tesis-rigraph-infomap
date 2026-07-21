@@ -1,0 +1,4 @@
+"red","nodos_originales","aristas_originales","componentes_originales","nodos_usados","aristas_usadas","comunidades_finales_oficial","codelength_oficial","num_top_modules_oficial","num_non_trivial_top_modules_oficial","num_levels_oficial","max_tree_depth_oficial","hierarchical_codelength_oficial","one_level_codelength_oficial","relative_codelength_savings_oficial"
+"Zachary",34,78,1,34,78,3,4.31179264580183,3,3,2,2,4.31179264580183,4.70442259888334,0.0834597540566848
+"USairports",755,23473,6,745,4618,5,6.5251475445216,5,5,3,3,6.5251475445216,7.53344110761298,0.133842363494744
+"yeast",2617,11855,92,2375,11693,12,6.97652175799475,12,12,3,4,6.97652175799475,10.1766075936513,0.314455068273726

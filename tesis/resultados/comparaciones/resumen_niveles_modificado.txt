@@ -1,0 +1,39 @@
+====================================
+RESUMEN DE NIVELES - IGRAPH MODIFICADO
+====================================
+
+RESUMEN POR NIVEL
+
+          red      columna modulos_distintos
+1     Zachary      level_1                 1
+2     Zachary      level_2                 3
+3     Zachary final_module                 3
+4  USairports      level_1                 1
+5  USairports      level_2                 5
+6  USairports      level_3                52
+7  USairports final_module                52
+8       enron      level_1                 1
+9       enron      level_2                12
+10      enron final_module                12
+11  UKfaculty      level_1                 1
+12  UKfaculty      level_2                 8
+13  UKfaculty final_module                 8
+14      yeast      level_1                 1
+15      yeast      level_2                15
+16      yeast      level_3               203
+17      yeast final_module               203
+
+RESUMEN POR RED
+
+         red primer_nivel_no_trivial modulos_en_primer_nivel_no_trivial
+1    Zachary                 level_2                                  3
+2 USairports                 level_2                                  5
+3      enron                 level_2                                 12
+4  UKfaculty                 level_2                                  8
+5      yeast                 level_2                                 15
+  comunidades_finales
+1                   3
+2                  52
+3                  12
+4                   8
+5                 203

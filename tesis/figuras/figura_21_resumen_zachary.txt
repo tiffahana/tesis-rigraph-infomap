@@ -1,0 +1,12 @@
+RESULTADO MULTINIVEL DE ZACHARY KARATE CLUB
+==========================================
+
+Nodos: 34 
+Aristas: 78 
+Nivel superior representado: level_2 
+Cantidad de mÃ³dulos superiores: 3 
+Cantidad de comunidades finales: 3 
+final_module coincide con membership(): TRUE 
+
+Columnas disponibles en multilevel_modules:
+node_id, level_1, level_2, final_module 

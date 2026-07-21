@@ -1,0 +1,2 @@
+"red","implementacion","nb_trials","nodos_originales","aristas_originales","componentes_originales","nodos_usados","aristas_usadas","comunidades_finales","codelength","modularity"
+"yeast","igraph_original",500,2617,11855,92,2375,11693,201,7.73704806138369,0.675085604813161
