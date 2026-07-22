@@ -1,0 +1,7 @@
+"red","nivel","semilla","ensayos","nodos_comparados","comunidades_a","comunidades_b","misma_particion","nmi","ari"
+"Zachary","top",123,500,34,3,1,FALSE,0,0
+"Zachary","final",123,500,34,3,1,FALSE,0,0
+"USairports","top",123,500,745,5,44,FALSE,0.611559834781584,0.570176578358276
+"USairports","final",123,500,745,57,44,FALSE,0.938675458862714,0.905090072860333
+"yeast","top",123,500,2375,13,171,FALSE,0.566956403286484,0.0862771679526674
+"yeast","final",123,500,2375,239,171,FALSE,0.930214310166261,0.773213095436912

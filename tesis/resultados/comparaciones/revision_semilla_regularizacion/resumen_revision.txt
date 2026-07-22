@@ -1,0 +1,153 @@
+============================================================
+REVISION: SEMILLA, NIVELES Y REGULARIZACION
+============================================================
+
+Version igraph: 2.3.2.9015
+Version Infomap oficial: 2.14.0
+Semilla: 123
+Ensayos: 500
+
+RESUMEN DE EJECUCIONES
+
+         red nodos aristas semilla ensayos comunidades_modificado_membership
+1    Zachary    34      78     123     500                                 3
+2 USairports   745    4618     123     500                                52
+3      yeast  2375   11693     123     500                               203
+  num_levels_modificado num_top_modules_modificado max_tree_depth_modificado
+1                     3                          3                         2
+2                     4                          5                         3
+3                     4                         15                         3
+  codelength_modificado comunidades_oficial_no_regularizado_top
+1              4.606059                                       3
+2              7.073544                                       5
+3              7.737622                                      13
+  comunidades_oficial_no_regularizado_final num_levels_oficial_no_regularizado
+1                                         3                                  2
+2                                        57                                  3
+3                                       239                                  3
+  num_top_modules_oficial_no_regularizado
+1                                       3
+2                                       5
+3                                      13
+  max_tree_depth_oficial_no_regularizado codelength_oficial_no_regularizado
+1                                      2                           4.311793
+2                                      3                           6.525148
+3                                      4                           6.974807
+  comunidades_oficial_regularizado_top comunidades_oficial_regularizado_final
+1                                    1                                      1
+2                                   44                                     44
+3                                  171                                    171
+  num_levels_oficial_regularizado num_top_modules_oficial_regularizado
+1                               2                                    1
+2                               2                                   44
+3                               2                                  171
+  max_tree_depth_oficial_regularizado codelength_oficial_regularizado
+1                                   2                        4.956624
+2                                   2                        7.542064
+3                                   2                        9.988122
+
+MEJOR CORRESPONDENCIA POR PARTICION OFICIAL
+
+                                                red semilla ensayos
+USairports.oficial_no_regularizado_final USairports     123     500
+yeast.oficial_no_regularizado_final           yeast     123     500
+Zachary.oficial_no_regularizado_final       Zachary     123     500
+USairports.oficial_no_regularizado_top   USairports     123     500
+yeast.oficial_no_regularizado_top             yeast     123     500
+Zachary.oficial_no_regularizado_top         Zachary     123     500
+USairports.oficial_regularizado_final    USairports     123     500
+yeast.oficial_regularizado_final              yeast     123     500
+Zachary.oficial_regularizado_final          Zachary     123     500
+USairports.oficial_regularizado_top      USairports     123     500
+yeast.oficial_regularizado_top                yeast     123     500
+Zachary.oficial_regularizado_top            Zachary     123     500
+                                         particion_modificada
+USairports.oficial_no_regularizado_final              level_3
+yeast.oficial_no_regularizado_final                   level_3
+Zachary.oficial_no_regularizado_final                 level_2
+USairports.oficial_no_regularizado_top                level_2
+yeast.oficial_no_regularizado_top                     level_2
+Zachary.oficial_no_regularizado_top                   level_2
+USairports.oficial_regularizado_final                 level_3
+yeast.oficial_regularizado_final                      level_3
+Zachary.oficial_regularizado_final                    level_1
+USairports.oficial_regularizado_top                   level_3
+yeast.oficial_regularizado_top                        level_3
+Zachary.oficial_regularizado_top                      level_1
+                                                     particion_oficial
+USairports.oficial_no_regularizado_final oficial_no_regularizado_final
+yeast.oficial_no_regularizado_final      oficial_no_regularizado_final
+Zachary.oficial_no_regularizado_final    oficial_no_regularizado_final
+USairports.oficial_no_regularizado_top     oficial_no_regularizado_top
+yeast.oficial_no_regularizado_top          oficial_no_regularizado_top
+Zachary.oficial_no_regularizado_top        oficial_no_regularizado_top
+USairports.oficial_regularizado_final       oficial_regularizado_final
+yeast.oficial_regularizado_final            oficial_regularizado_final
+Zachary.oficial_regularizado_final          oficial_regularizado_final
+USairports.oficial_regularizado_top           oficial_regularizado_top
+yeast.oficial_regularizado_top                oficial_regularizado_top
+Zachary.oficial_regularizado_top              oficial_regularizado_top
+                                         nodos_comparados comunidades_a
+USairports.oficial_no_regularizado_final              745            52
+yeast.oficial_no_regularizado_final                  2375           203
+Zachary.oficial_no_regularizado_final                  34             3
+USairports.oficial_no_regularizado_top                745             5
+yeast.oficial_no_regularizado_top                    2375            15
+Zachary.oficial_no_regularizado_top                    34             3
+USairports.oficial_regularizado_final                 745            52
+yeast.oficial_regularizado_final                     2375           203
+Zachary.oficial_regularizado_final                     34             1
+USairports.oficial_regularizado_top                   745            52
+yeast.oficial_regularizado_top                       2375           203
+Zachary.oficial_regularizado_top                       34             1
+                                         comunidades_b misma_particion
+USairports.oficial_no_regularizado_final            57           FALSE
+yeast.oficial_no_regularizado_final                239           FALSE
+Zachary.oficial_no_regularizado_final                3            TRUE
+USairports.oficial_no_regularizado_top               5            TRUE
+yeast.oficial_no_regularizado_top                   13           FALSE
+Zachary.oficial_no_regularizado_top                  3            TRUE
+USairports.oficial_regularizado_final               44           FALSE
+yeast.oficial_regularizado_final                   171           FALSE
+Zachary.oficial_regularizado_final                   1            TRUE
+USairports.oficial_regularizado_top                 44           FALSE
+yeast.oficial_regularizado_top                     171           FALSE
+Zachary.oficial_regularizado_top                     1            TRUE
+                                               nmi       ari
+USairports.oficial_no_regularizado_final 0.9519609 0.9219994
+yeast.oficial_no_regularizado_final      0.9403866 0.7903680
+Zachary.oficial_no_regularizado_final    1.0000000 1.0000000
+USairports.oficial_no_regularizado_top   1.0000000 1.0000000
+yeast.oficial_no_regularizado_top        0.7544293 0.5933830
+Zachary.oficial_no_regularizado_top      1.0000000 1.0000000
+USairports.oficial_regularizado_final    0.9239717 0.8734853
+yeast.oficial_regularizado_final         0.9447185 0.8233599
+Zachary.oficial_regularizado_final       1.0000000       NaN
+USairports.oficial_regularizado_top      0.9239717 0.8734853
+yeast.oficial_regularizado_top           0.9447185 0.8233599
+Zachary.oficial_regularizado_top         1.0000000       NaN
+
+EFECTO DE LA REGULARIZACION EN INFOMAP OFICIAL
+
+         red nivel semilla ensayos nodos_comparados comunidades_a comunidades_b
+1    Zachary   top     123     500               34             3             1
+2    Zachary final     123     500               34             3             1
+3 USairports   top     123     500              745             5            44
+4 USairports final     123     500              745            57            44
+5      yeast   top     123     500             2375            13           171
+6      yeast final     123     500             2375           239           171
+  misma_particion       nmi        ari
+1           FALSE 0.0000000 0.00000000
+2           FALSE 0.0000000 0.00000000
+3           FALSE 0.6115598 0.57017658
+4           FALSE 0.9386755 0.90509007
+5           FALSE 0.5669564 0.08627717
+6           FALSE 0.9302143 0.77321310
+
+OPCIONES POR DEFECTO DE LA INTERFAZ INSTALADA
+
+                   opcion valor_por_defecto_interfaz
+1             regularized                      FALSE
+2 regularization_strength                          1
+3                    seed                        123
+4              num_trials                          1

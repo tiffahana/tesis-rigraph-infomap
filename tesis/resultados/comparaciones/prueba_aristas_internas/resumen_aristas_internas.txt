@@ -1,0 +1,111 @@
+PRUEBA: EFECTO DE CONSERVAR LAS ARISTAS INTERNAS
+==============================================================
+Fecha:    2026-07-22 04:57:19
+igraph:   2.3.2.9015
+infomap:  2.14.0
+Semilla:  123    Ensayos: 500
+
+
+==============================================================
+RED: Zachary
+==============================================================
+Nodos: 34   Aristas: 78
+
+Particion base (Infomap de dos niveles): 3 comunidades
+
+Variante SIN aristas internas (comportamiento actual):
+  niveles construidos: 2  | modulos en nivel superior: 3
+Variante CON aristas internas (propuesta):
+  niveles construidos: 2  | modulos en nivel superior: 3
+
+Control: la reimplementacion SIN internas reproduce al paquete: TRUE
+
+Infomap oficial: superior = 3  | final = 3
+
+--------------------------------------------------------------
+CONCORDANCIA DEL NIVEL SUPERIOR CONTRA INFOMAP OFICIAL
+--------------------------------------------------------------
+variante                          NMI      ARI    modulos
+SIN aristas internas           1.0000   1.0000          3
+CON aristas internas           1.0000   1.0000          3
+(oficial)                           -        -          3
+
+Nivel final contra oficial (no depende de la agregacion):
+  NMI = 1.0000   ARI = 1.0000
+
+==============================================================
+RED: USairports
+==============================================================
+Nodos: 745   Aristas: 4618
+
+Particion base (Infomap de dos niveles): 52 comunidades
+
+Variante SIN aristas internas (comportamiento actual):
+  niveles construidos: 3  | modulos en nivel superior: 5
+Variante CON aristas internas (propuesta):
+  niveles construidos: 3  | modulos en nivel superior: 5
+
+Control: la reimplementacion SIN internas reproduce al paquete: TRUE
+
+Infomap oficial: superior = 5  | final = 57
+
+--------------------------------------------------------------
+CONCORDANCIA DEL NIVEL SUPERIOR CONTRA INFOMAP OFICIAL
+--------------------------------------------------------------
+variante                          NMI      ARI    modulos
+SIN aristas internas           1.0000   1.0000          5
+CON aristas internas           1.0000   1.0000          5
+(oficial)                           -        -          5
+
+Nivel final contra oficial (no depende de la agregacion):
+  NMI = 0.9520   ARI = 0.9220
+
+==============================================================
+RED: yeast
+==============================================================
+Nodos: 2375   Aristas: 11693
+
+Particion base (Infomap de dos niveles): 203 comunidades
+
+Variante SIN aristas internas (comportamiento actual):
+  niveles construidos: 3  | modulos en nivel superior: 15
+Variante CON aristas internas (propuesta):
+  niveles construidos: 3  | modulos en nivel superior: 15
+
+Control: la reimplementacion SIN internas reproduce al paquete: TRUE
+
+Infomap oficial: superior = 13  | final = 239
+
+--------------------------------------------------------------
+CONCORDANCIA DEL NIVEL SUPERIOR CONTRA INFOMAP OFICIAL
+--------------------------------------------------------------
+variante                          NMI      ARI    modulos
+SIN aristas internas           0.7544   0.5934         15
+CON aristas internas           0.7199   0.5628         15
+(oficial)                           -        -         13
+
+Nivel final contra oficial (no depende de la agregacion):
+  NMI = 0.9404   ARI = 0.7904
+
+
+==============================================================
+RESUMEN
+==============================================================
+        red nodos aristas semilla ensayos modulos_top_sin modulos_top_con
+    Zachary    34      78     123     500               3               3
+ USairports   745    4618     123     500               5               5
+      yeast  2375   11693     123     500              15              15
+ modulos_top_ofic nmi_top_sin ari_top_sin nmi_top_con ari_top_con nmi_final
+                3   1.0000000    1.000000    1.000000   1.0000000 1.0000000
+                5   1.0000000    1.000000    1.000000   1.0000000 0.9519609
+               13   0.7544293    0.593383    0.719869   0.5627755 0.9403866
+ ari_final
+ 1.0000000
+ 0.9219994
+ 0.7903680
+
+Lectura:
+  Si nmi_top_con > nmi_top_sin, conservar las aristas internas mejora
+  la concordancia del nivel superior y conviene reportarlo.
+  Si son similares, la diferencia se explica por la optimizacion conjunta
+  de la ecuacion del mapa jerarquica en Infomap oficial.

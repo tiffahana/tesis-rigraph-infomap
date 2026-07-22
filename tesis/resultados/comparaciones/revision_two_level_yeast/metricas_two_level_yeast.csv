@@ -1,0 +1,6 @@
+"comparacion","nodos","comunidades_a","comunidades_b","misma_particion","nmi","ari"
+"modificado_top_vs_oficial_jerarquico_top",2375,15,13,FALSE,0.75442933103185,0.593382971889504
+"modificado_final_vs_oficial_jerarquico_final",2375,203,239,FALSE,0.940386590914033,0.790368016354777
+"modificado_final_vs_oficial_two_level",2375,203,159,FALSE,0.952326868383906,0.88559941609156
+"modificado_top_vs_oficial_two_level",2375,15,159,FALSE,0.547457548951317,0.0606915301051389
+"oficial_jerarquico_final_vs_two_level",2375,239,159,FALSE,0.93208020637619,0.769677039033174

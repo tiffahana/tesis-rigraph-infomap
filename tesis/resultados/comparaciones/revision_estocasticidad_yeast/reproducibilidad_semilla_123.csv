@@ -1,0 +1,5 @@
+"implementacion","nivel","nodos","comunidades_a","comunidades_b","misma_particion","nmi","ari"
+"igraph_modificado","superior",2375,15,15,TRUE,1,1
+"igraph_modificado","final",2375,203,203,TRUE,1,1
+"infomap_oficial","superior",2375,13,13,TRUE,1,1
+"infomap_oficial","final",2375,239,239,TRUE,1,0.999999999999994

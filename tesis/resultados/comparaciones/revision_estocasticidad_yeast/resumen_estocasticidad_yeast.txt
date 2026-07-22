@@ -1,0 +1,84 @@
+============================================================
+ESTOCASTICIDAD DE INFOMAP EN YEAST
+============================================================
+
+Version igraph: 2.3.2.9015
+Version Infomap oficial: 2.14.0
+Nodos: 2375
+Aristas: 11693
+Ensayos por ejecucion: 500
+Semillas: 1, 2, 3, 4, 5, 6, 7, 8, 9, 123
+
+RESULTADOS POR SEMILLA
+
+   semilla repeticion    nivel tiempo_igraph_seg tiempo_oficial_seg nodos
+1        1          1 superior             63.71              59.93  2375
+2        1          1    final             63.71              59.93  2375
+3        2          1 superior             62.26              61.88  2375
+4        2          1    final             62.26              61.88  2375
+5        3          1 superior             67.10              62.59  2375
+6        3          1    final             67.10              62.59  2375
+7        4          1 superior             67.17              61.50  2375
+8        4          1    final             67.17              61.50  2375
+9        5          1 superior             63.19              63.98  2375
+10       5          1    final             63.19              63.98  2375
+11       6          1 superior             75.16             478.58  2375
+12       6          1    final             75.16             478.58  2375
+13       7          1 superior             69.36              64.78  2375
+14       7          1    final             69.36              64.78  2375
+15       8          1 superior             67.05              64.17  2375
+16       8          1    final             67.05              64.17  2375
+17       9          1 superior             90.57             117.83  2375
+18       9          1    final             90.57             117.83  2375
+19     123          1 superior             80.45              74.92  2375
+20     123          1    final             80.45              74.92  2375
+21     123          2 superior             72.47              72.50  2375
+22     123          2    final             72.47              72.50  2375
+   comunidades_a comunidades_b misma_particion       nmi       ari
+1             17            13           FALSE 0.6893468 0.4946784
+2            199           236           FALSE 0.9481883 0.8357114
+3             15            13           FALSE 0.6837020 0.4463225
+4            197           242           FALSE 0.9482295 0.8230339
+5             15            13           FALSE 0.6984837 0.5242444
+6            205           243           FALSE 0.9470455 0.8302774
+7             15            10           FALSE 0.7714040 0.6833911
+8            199           231           FALSE 0.9487524 0.8107541
+9             15            13           FALSE 0.7047875 0.4791651
+10           200           242           FALSE 0.9494986 0.8582051
+11            15            13           FALSE 0.6656870 0.4407698
+12           203           244           FALSE 0.9467155 0.8301096
+13            16            11           FALSE 0.7971978 0.6940056
+14           205           236           FALSE 0.9434022 0.7813962
+15            14            12           FALSE 0.6523878 0.4721708
+16           200           237           FALSE 0.9552820 0.8517532
+17            16            12           FALSE 0.6951514 0.5496588
+18           202           234           FALSE 0.9517402 0.8502695
+19            15            13           FALSE 0.7544293 0.5933830
+20           203           239           FALSE 0.9403866 0.7903680
+21            15            13           FALSE 0.7544293 0.5933830
+22           203           239           FALSE 0.9403866 0.7903680
+
+RESUMEN POR NIVEL
+
+     nivel ejecuciones comunidades_igraph_min comunidades_igraph_max
+1    final          11                    197                    205
+2 superior          11                     14                     17
+  comunidades_oficial_min comunidades_oficial_max coincidencias_exactas
+1                     231                     244                     0
+2                      10                      13                     0
+    nmi_min nmi_media   nmi_max   ari_min ari_media   ari_max
+1 0.9403866 0.9472389 0.9552820 0.7813962 0.8229315 0.8582051
+2 0.6523878 0.7151824 0.7971978 0.4407698 0.5428339 0.6940056
+
+REPRODUCIBILIDAD DE LA SEMILLA 123
+
+     implementacion    nivel nodos comunidades_a comunidades_b misma_particion
+1 igraph_modificado superior  2375            15            15            TRUE
+2 igraph_modificado    final  2375           203           203            TRUE
+3   infomap_oficial superior  2375            13            13            TRUE
+4   infomap_oficial    final  2375           239           239            TRUE
+  nmi ari
+1   1   1
+2   1   1
+3   1   1
+4   1   1

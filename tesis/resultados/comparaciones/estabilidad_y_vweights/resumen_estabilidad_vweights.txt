@@ -1,0 +1,161 @@
+ESTABILIDAD ENTRE SEMILLAS Y PRUEBA DE v.weights
+==================================================================
+Fecha:    2026-07-22 05:32:56
+igraph:   2.3.2.9015
+infomap:  2.14.0
+Semillas: 11, 23, 42, 77, 123   Ensayos: 500
+
+
+==================================================================
+RED: Zachary
+==================================================================
+   preparando red...
+Nodos: 34  Aristas: 78
+
+   semilla 11 : oficial...
+   semilla 11 : prototipo...
+   semilla 23 : oficial...
+   semilla 23 : prototipo...
+   semilla 42 : oficial...
+   semilla 42 : prototipo...
+   semilla 77 : oficial...
+   semilla 77 : prototipo...
+   semilla 123 : oficial...
+   semilla 123 : prototipo...
+------------------------------------------------------------------
+PARTE A - ESTABILIDAD (NMI)
+------------------------------------------------------------------
+comparacion                            min mediana     max
+oficial vs oficial  (superior)      1.0000  1.0000  1.0000
+prototipo vs oficial (superior)     1.0000  1.0000  1.0000
+oficial vs oficial  (final)         1.0000  1.0000  1.0000
+prototipo vs oficial (final)        1.0000  1.0000  1.0000
+
+Modulos superiores por semilla:
+  oficial:   3, 3, 3, 3, 3
+  prototipo: 3, 3, 3, 3, 3
+
+Lectura: si el rango de 'oficial vs oficial' cubre el valor de
+'prototipo vs oficial', la diferencia esta dentro de la variabilidad
+propia del algoritmo y no requiere explicacion adicional.
+
+   parte B: v.weights...
+------------------------------------------------------------------
+PARTE B - EFECTO DE v.weights (semilla 123 )
+------------------------------------------------------------------
+variante                          NMI      ARI   modulos
+sin v.weights (actual)         1.0000   1.0000         3
+con v.weights (propuesta)      1.0000   1.0000         3
+(oficial)                           -        -         3
+
+
+==================================================================
+RED: USairports
+==================================================================
+   preparando red...
+Nodos: 745  Aristas: 4618
+
+   semilla 11 : oficial...
+   semilla 11 : prototipo...
+   semilla 23 : oficial...
+   semilla 23 : prototipo...
+   semilla 42 : oficial...
+   semilla 42 : prototipo...
+   semilla 77 : oficial...
+   semilla 77 : prototipo...
+   semilla 123 : oficial...
+   semilla 123 : prototipo...
+------------------------------------------------------------------
+PARTE A - ESTABILIDAD (NMI)
+------------------------------------------------------------------
+comparacion                            min mediana     max
+oficial vs oficial  (superior)      1.0000  1.0000  1.0000
+prototipo vs oficial (superior)     1.0000  1.0000  1.0000
+oficial vs oficial  (final)         0.9636  0.9788  0.9898
+prototipo vs oficial (final)        0.9373  0.9420  0.9520
+
+Modulos superiores por semilla:
+  oficial:   5, 5, 5, 5, 5
+  prototipo: 5, 5, 5, 5, 5
+
+Lectura: si el rango de 'oficial vs oficial' cubre el valor de
+'prototipo vs oficial', la diferencia esta dentro de la variabilidad
+propia del algoritmo y no requiere explicacion adicional.
+
+   parte B: v.weights...
+------------------------------------------------------------------
+PARTE B - EFECTO DE v.weights (semilla 123 )
+------------------------------------------------------------------
+variante                          NMI      ARI   modulos
+sin v.weights (actual)         1.0000   1.0000         5
+con v.weights (propuesta)      1.0000   1.0000         5
+(oficial)                           -        -         5
+
+
+==================================================================
+RED: yeast
+==================================================================
+   preparando red...
+Nodos: 2375  Aristas: 11693
+
+   semilla 11 : oficial...
+   semilla 11 : prototipo...
+   semilla 23 : oficial...
+   semilla 23 : prototipo...
+   semilla 42 : oficial...
+   semilla 42 : prototipo...
+   semilla 77 : oficial...
+   semilla 77 : prototipo...
+   semilla 123 : oficial...
+   semilla 123 : prototipo...
+------------------------------------------------------------------
+PARTE A - ESTABILIDAD (NMI)
+------------------------------------------------------------------
+comparacion                            min mediana     max
+oficial vs oficial  (superior)      0.6967  0.7623  0.9254
+prototipo vs oficial (superior)     0.6602  0.7434  0.7831
+oficial vs oficial  (final)         0.9581  0.9611  0.9702
+prototipo vs oficial (final)        0.9404  0.9470  0.9563
+
+Modulos superiores por semilla:
+  oficial:   12, 12, 11, 12, 13
+  prototipo: 15, 14, 15, 16, 15
+
+Lectura: si el rango de 'oficial vs oficial' cubre el valor de
+'prototipo vs oficial', la diferencia esta dentro de la variabilidad
+propia del algoritmo y no requiere explicacion adicional.
+
+   parte B: v.weights...
+------------------------------------------------------------------
+PARTE B - EFECTO DE v.weights (semilla 123 )
+------------------------------------------------------------------
+variante                          NMI      ARI   modulos
+sin v.weights (actual)         0.7544   0.5934        15
+con v.weights (propuesta)      0.6438   0.3901        14
+(oficial)                           -        -        13
+
+
+
+==================================================================
+RESUMEN PARTE A
+==================================================================
+        red semillas ensayos oo_top_min oo_top_med oo_top_max mo_top_min
+    Zachary        5     500  1.0000000  1.0000000  1.0000000  1.0000000
+ USairports        5     500  1.0000000  1.0000000  1.0000000  1.0000000
+      yeast        5     500  0.6966877  0.7622689  0.9253547  0.6601996
+ mo_top_med mo_top_max oo_fin_med mo_fin_med
+  1.0000000  1.0000000  1.0000000  1.0000000
+  1.0000000  1.0000000  0.9788089  0.9420127
+  0.7434216  0.7831361  0.9610627  0.9469754
+
+==================================================================
+RESUMEN PARTE B
+==================================================================
+        red semilla ensayos   nmi_sin  ari_sin   nmi_con   ari_con modulos_sin
+    Zachary     123     500 1.0000000 1.000000 1.0000000 1.0000000           3
+ USairports     123     500 1.0000000 1.000000 1.0000000 1.0000000           5
+      yeast     123     500 0.7544293 0.593383 0.6437843 0.3900674          15
+ modulos_con modulos_ofic
+           3            3
+           5            5
+          14           13

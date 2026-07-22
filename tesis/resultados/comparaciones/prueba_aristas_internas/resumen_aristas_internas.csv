@@ -1,0 +1,4 @@
+"red","nodos","aristas","semilla","ensayos","modulos_top_sin","modulos_top_con","modulos_top_ofic","nmi_top_sin","ari_top_sin","nmi_top_con","ari_top_con","nmi_final","ari_final"
+"Zachary",34,78,123,500,3,3,3,1,1,1,1,1,1
+"USairports",745,4618,123,500,5,5,5,1,1,1,1,0.951960884595205,0.921999383416782
+"yeast",2375,11693,123,500,15,15,13,0.75442933103185,0.593382971889504,0.719869035481272,0.562775527893816,0.940386590914033,0.790368016354777
