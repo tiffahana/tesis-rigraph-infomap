@@ -1,0 +1,11 @@
+N=1000
+k=20
+maxk=50
+minc=20
+maxc=50
+minC=100
+maxC=300
+mu1=0.20
+mu2=0.40
+fraccion_misma_micro=0.40
+semilla_inicial=202

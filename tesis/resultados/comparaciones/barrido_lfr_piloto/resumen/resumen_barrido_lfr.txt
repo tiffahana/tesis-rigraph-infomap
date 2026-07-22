@@ -1,0 +1,204 @@
+============================================================
+RESUMEN DEL BARRIDO PILOTO LFR
+============================================================
+
+Redes analizadas: 27 
+Configuraciones: 9 
+Semillas por configuracion: 3 
+
+TABLA COMPACTA DE NMI MEDIO
+
+      configuracion  mu1 mu2 misma_micro prototipo_macro_nmi_media
+1 mu1_0.05_mu2_0.20 0.05 0.2        0.75                 0.9697594
+2 mu1_0.05_mu2_0.30 0.05 0.3        0.65                 0.8103683
+3 mu1_0.05_mu2_0.40 0.05 0.4        0.55                 0.8497741
+4 mu1_0.10_mu2_0.20 0.10 0.2        0.70                 1.0000000
+5 mu1_0.10_mu2_0.30 0.10 0.3        0.60                 0.7620658
+6 mu1_0.10_mu2_0.40 0.10 0.4        0.50                 0.8947581
+7 mu1_0.20_mu2_0.20 0.20 0.2        0.60                 0.6575917
+8 mu1_0.20_mu2_0.30 0.20 0.3        0.50                 0.7761362
+9 mu1_0.20_mu2_0.40 0.20 0.4        0.40                 1.0000000
+  prototipo_micro_nmi_media oficial_macro_nmi_media oficial_micro_nmi_media
+1                 0.9925305               1.0000000               1.0000000
+2                 0.9263748               0.8468651               0.9923109
+3                 0.7874495               0.9025826               0.9154693
+4                 0.9968547               0.9756827               1.0000000
+5                 0.9019263               0.7343943               0.9767624
+6                 0.7474498               0.8872518               0.8191756
+7                 0.9857789               0.6575917               0.9857789
+8                 0.8551610               0.7761362               0.8763639
+9                 0.6456260               1.0000000               0.6456260
+  prototipo_vs_oficial_superior_nmi_media prototipo_vs_oficial_final_nmi_media
+1                               0.9697594                            0.9925305
+2                               0.6681882                            0.9340310
+3                               0.9471915                            0.8703131
+4                               0.9756827                            0.9968547
+5                               0.5757132                            0.9249761
+6                               0.9924937                            0.9244254
+7                               1.0000000                            1.0000000
+8                               1.0000000                            0.9786046
+9                               1.0000000                            1.0000000
+
+PROMEDIOS GLOBALES
+
+   grupo modified_top_vs_truth_macro_nmi_n
+1 global                                27
+  modified_top_vs_truth_macro_nmi_media modified_top_vs_truth_macro_nmi_mediana
+1                             0.8578282                               0.8433032
+  modified_top_vs_truth_macro_nmi_sd modified_top_vs_truth_macro_nmi_minimo
+1                          0.1219384                              0.6463363
+  modified_top_vs_truth_macro_nmi_maximo modified_top_vs_truth_macro_ari_n
+1                                      1                                27
+  modified_top_vs_truth_macro_ari_media modified_top_vs_truth_macro_ari_mediana
+1                             0.7409402                               0.7582306
+  modified_top_vs_truth_macro_ari_sd modified_top_vs_truth_macro_ari_minimo
+1                          0.2394123                              0.2471421
+  modified_top_vs_truth_macro_ari_maximo modified_final_vs_truth_micro_nmi_n
+1                                      1                                  27
+  modified_final_vs_truth_micro_nmi_media
+1                               0.8710168
+  modified_final_vs_truth_micro_nmi_mediana
+1                                 0.8967501
+  modified_final_vs_truth_micro_nmi_sd modified_final_vs_truth_micro_nmi_minimo
+1                            0.1221647                                0.6322909
+  modified_final_vs_truth_micro_nmi_maximo modified_final_vs_truth_micro_ari_n
+1                                        1                                  27
+  modified_final_vs_truth_micro_ari_media
+1                               0.6109911
+  modified_final_vs_truth_micro_ari_mediana
+1                                 0.5658755
+  modified_final_vs_truth_micro_ari_sd modified_final_vs_truth_micro_ari_minimo
+1                            0.2744453                                0.2240692
+  modified_final_vs_truth_micro_ari_maximo official_top_vs_truth_macro_nmi_n
+1                                        1                                27
+  official_top_vs_truth_macro_nmi_media official_top_vs_truth_macro_nmi_mediana
+1                             0.8645005                               0.8566694
+  official_top_vs_truth_macro_nmi_sd official_top_vs_truth_macro_nmi_minimo
+1                          0.1359388                              0.5151419
+  official_top_vs_truth_macro_nmi_maximo official_top_vs_truth_macro_ari_n
+1                                      1                                27
+  official_top_vs_truth_macro_ari_media official_top_vs_truth_macro_ari_mediana
+1                             0.7651477                               0.8084544
+  official_top_vs_truth_macro_ari_sd official_top_vs_truth_macro_ari_minimo
+1                          0.2506678                              0.2471421
+  official_top_vs_truth_macro_ari_maximo official_final_vs_truth_micro_nmi_n
+1                                      1                                  27
+  official_final_vs_truth_micro_nmi_media
+1                               0.9123874
+  official_final_vs_truth_micro_nmi_mediana
+1                                 0.9769328
+  official_final_vs_truth_micro_nmi_sd official_final_vs_truth_micro_nmi_minimo
+1                            0.1170162                                0.6322909
+  official_final_vs_truth_micro_nmi_maximo official_final_vs_truth_micro_ari_n
+1                                        1                                  27
+  official_final_vs_truth_micro_ari_media
+1                               0.7291367
+  official_final_vs_truth_micro_ari_mediana
+1                                  0.868946
+  official_final_vs_truth_micro_ari_sd official_final_vs_truth_micro_ari_minimo
+1                            0.2781229                                0.2240692
+  official_final_vs_truth_micro_ari_maximo modified_top_vs_official_top_nmi_n
+1                                        1                                 27
+  modified_top_vs_official_top_nmi_media
+1                              0.9032254
+  modified_top_vs_official_top_nmi_mediana modified_top_vs_official_top_nmi_sd
+1                                        1                           0.1753495
+  modified_top_vs_official_top_nmi_minimo
+1                               0.3487748
+  modified_top_vs_official_top_nmi_maximo modified_top_vs_official_top_ari_n
+1                                       1                                 27
+  modified_top_vs_official_top_ari_media
+1                              0.8443633
+  modified_top_vs_official_top_ari_mediana modified_top_vs_official_top_ari_sd
+1                                        1                           0.2679918
+  modified_top_vs_official_top_ari_minimo
+1                               0.1134466
+  modified_top_vs_official_top_ari_maximo
+1                                       1
+  modified_final_vs_official_final_nmi_n
+1                                     27
+  modified_final_vs_official_final_nmi_media
+1                                  0.9579706
+  modified_final_vs_official_final_nmi_mediana
+1                                            1
+  modified_final_vs_official_final_nmi_sd
+1                              0.06264348
+  modified_final_vs_official_final_nmi_minimo
+1                                   0.7732761
+  modified_final_vs_official_final_nmi_maximo
+1                                           1
+  modified_final_vs_official_final_ari_n
+1                                     27
+  modified_final_vs_official_final_ari_media
+1                                  0.8662727
+  modified_final_vs_official_final_ari_mediana
+1                                            1
+  modified_final_vs_official_final_ari_sd
+1                               0.1694789
+  modified_final_vs_official_final_ari_minimo
+1                                   0.4044924
+  modified_final_vs_official_final_ari_maximo
+1                                           1
+
+DIFERENCIAS MEDIAS PROTOTIPO - OFICIAL
+
+      configuracion  mu1 mu2 misma_micro diferencia_nmi_macro
+1 mu1_0.20_mu2_0.40 0.20 0.4        0.40          0.000000000
+2 mu1_0.20_mu2_0.30 0.20 0.3        0.50          0.000000000
+3 mu1_0.10_mu2_0.40 0.10 0.4        0.50          0.007506311
+4 mu1_0.05_mu2_0.40 0.05 0.4        0.55         -0.052808492
+5 mu1_0.20_mu2_0.20 0.20 0.2        0.60          0.000000000
+6 mu1_0.10_mu2_0.30 0.10 0.3        0.60          0.027671452
+7 mu1_0.05_mu2_0.30 0.05 0.3        0.65         -0.036496785
+8 mu1_0.10_mu2_0.20 0.10 0.2        0.70          0.024317276
+9 mu1_0.05_mu2_0.20 0.05 0.2        0.75         -0.030240593
+  diferencia_ari_macro diferencia_nmi_micro diferencia_ari_micro
+1           0.00000000          0.000000000           0.00000000
+2           0.00000000         -0.021202967          -0.05856293
+3           0.01010323         -0.071725770          -0.07809550
+4          -0.08255064         -0.128019727          -0.27271187
+5           0.00000000          0.000000000           0.00000000
+6           0.01755713         -0.074836108          -0.27622848
+7          -0.14178831         -0.065936106          -0.31299247
+8           0.04548180         -0.003145326          -0.01963277
+9          -0.06667010         -0.007469548          -0.04508629
+
+MEJORES Y PEORES ESCENARIOS DEL PROTOTIPO
+
+Macro, mejor:
+      configuracion mu1 mu2 misma_micro prototipo_macro_nmi_media
+4 mu1_0.10_mu2_0.20 0.1 0.2         0.7                         1
+  prototipo_micro_nmi_media oficial_macro_nmi_media oficial_micro_nmi_media
+4                 0.9968547               0.9756827                       1
+  prototipo_vs_oficial_superior_nmi_media prototipo_vs_oficial_final_nmi_media
+4                               0.9756827                            0.9968547
+
+Macro, peor:
+      configuracion mu1 mu2 misma_micro prototipo_macro_nmi_media
+7 mu1_0.20_mu2_0.20 0.2 0.2         0.6                 0.6575917
+  prototipo_micro_nmi_media oficial_macro_nmi_media oficial_micro_nmi_media
+7                 0.9857789               0.6575917               0.9857789
+  prototipo_vs_oficial_superior_nmi_media prototipo_vs_oficial_final_nmi_media
+7                                       1                                    1
+
+Micro, mejor:
+      configuracion mu1 mu2 misma_micro prototipo_macro_nmi_media
+4 mu1_0.10_mu2_0.20 0.1 0.2         0.7                         1
+  prototipo_micro_nmi_media oficial_macro_nmi_media oficial_micro_nmi_media
+4                 0.9968547               0.9756827                       1
+  prototipo_vs_oficial_superior_nmi_media prototipo_vs_oficial_final_nmi_media
+4                               0.9756827                            0.9968547
+
+Micro, peor:
+      configuracion mu1 mu2 misma_micro prototipo_macro_nmi_media
+9 mu1_0.20_mu2_0.40 0.2 0.4         0.4                         1
+  prototipo_micro_nmi_media oficial_macro_nmi_media oficial_micro_nmi_media
+9                  0.645626                       1                0.645626
+  prototipo_vs_oficial_superior_nmi_media prototipo_vs_oficial_final_nmi_media
+9                                       1                                    1
+
+LECTURA METODOLOGICA
+
+- mu1 controla la proporcion de enlaces entre macrocomunidades y afecta principalmente el nivel superior.
+- mu1 + mu2 reduce la fraccion de enlaces internos a la microcomunidad y afecta principalmente el nivel final.
+- Los resultados deben interpretarse como piloto porque hay tres semillas por configuracion.

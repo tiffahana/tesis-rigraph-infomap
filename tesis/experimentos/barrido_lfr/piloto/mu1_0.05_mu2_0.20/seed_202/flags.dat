@@ -1,0 +1,9 @@
+-N 1000
+-k 20
+-maxk 50
+-mu1 0.05
+-minc 20
+-maxc 50
+-minC 100
+-maxC 300
+-mu2 0.20

@@ -1,0 +1,257 @@
+Version igraph: 2.3.2.9015 
+Version Infomap oficial: 2.14.0 
+Ensayos por ejecucion: 100 
+Redes seleccionadas: 27 
+Salida: C:/Users/lysit/Desktop/Tesis igraph/rigraph-main/tesis/resultados/comparaciones/barrido_lfr_piloto 
+
+
+------------------------------------------------------------
+[1/27] mu1_0.05_mu2_0.20, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 1 
+NMI oficial macro: 1 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[2/27] mu1_0.05_mu2_0.20, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 1 
+NMI oficial macro: 1 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[3/27] mu1_0.05_mu2_0.20, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.9092782 
+NMI modificado micro: 0.9775914 
+NMI oficial macro: 1 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[4/27] mu1_0.05_mu2_0.30, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.9270482 
+NMI modificado micro: 0.9228237 
+NMI oficial macro: 0.8566694 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[5/27] mu1_0.05_mu2_0.30, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.7560951 
+NMI modificado micro: 0.9342112 
+NMI oficial macro: 0.8419686 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[6/27] mu1_0.05_mu2_0.30, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.7479617 
+NMI modificado micro: 0.9220896 
+NMI oficial macro: 0.8419572 
+NMI oficial micro: 0.9769328 
+
+------------------------------------------------------------
+[7/27] mu1_0.05_mu2_0.40, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.8644446 
+NMI modificado micro: 0.7622453 
+NMI oficial macro: 0.8644446 
+NMI oficial micro: 0.9802581 
+
+------------------------------------------------------------
+[8/27] mu1_0.05_mu2_0.40, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.8415745 
+NMI modificado micro: 0.7986201 
+NMI oficial macro: 1 
+NMI oficial micro: 0.8802153 
+
+------------------------------------------------------------
+[9/27] mu1_0.05_mu2_0.40, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.8433032 
+NMI modificado micro: 0.8014832 
+NMI oficial macro: 0.8433032 
+NMI oficial micro: 0.8859344 
+
+------------------------------------------------------------
+[10/27] mu1_0.10_mu2_0.20, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 0.990564 
+NMI oficial macro: 0.9270482 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[11/27] mu1_0.10_mu2_0.20, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 1 
+NMI oficial macro: 1 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[12/27] mu1_0.10_mu2_0.20, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 1 
+NMI oficial macro: 1 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[13/27] mu1_0.10_mu2_0.30, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.7731213 
+NMI modificado micro: 0.9304265 
+NMI oficial macro: 0.9319461 
+NMI oficial micro: 0.9800824 
+
+------------------------------------------------------------
+[14/27] mu1_0.10_mu2_0.30, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.7562145 
+NMI modificado micro: 0.8824182 
+NMI oficial macro: 0.7560951 
+NMI oficial micro: 0.9732927 
+
+------------------------------------------------------------
+[15/27] mu1_0.10_mu2_0.30, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.7568614 
+NMI modificado micro: 0.8929343 
+NMI oficial macro: 0.5151419 
+NMI oficial micro: 0.9769121 
+
+------------------------------------------------------------
+[16/27] mu1_0.10_mu2_0.40, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 0.6424047 
+NMI oficial macro: 0.9774811 
+NMI oficial micro: 0.857582 
+
+------------------------------------------------------------
+[17/27] mu1_0.10_mu2_0.40, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.8348529 
+NMI modificado micro: 0.8007558 
+NMI oficial macro: 0.8348529 
+NMI oficial micro: 0.8007558 
+
+------------------------------------------------------------
+[18/27] mu1_0.10_mu2_0.40, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.8494214 
+NMI modificado micro: 0.7991889 
+NMI oficial macro: 0.8494214 
+NMI oficial micro: 0.7991889 
+
+------------------------------------------------------------
+[19/27] mu1_0.20_mu2_0.20, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.651895 
+NMI modificado micro: 0.9802041 
+NMI oficial macro: 0.651895 
+NMI oficial micro: 0.9802041 
+
+------------------------------------------------------------
+[20/27] mu1_0.20_mu2_0.20, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.6463363 
+NMI modificado micro: 1 
+NMI oficial macro: 0.6463363 
+NMI oficial micro: 1 
+
+------------------------------------------------------------
+[21/27] mu1_0.20_mu2_0.20, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.674544 
+NMI modificado micro: 0.9771326 
+NMI oficial macro: 0.674544 
+NMI oficial micro: 0.9771326 
+
+------------------------------------------------------------
+[22/27] mu1_0.20_mu2_0.30, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.7535819 
+NMI modificado micro: 0.8681768 
+NMI oficial macro: 0.7535819 
+NMI oficial micro: 0.9317857 
+
+------------------------------------------------------------
+[23/27] mu1_0.20_mu2_0.30, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.8348069 
+NMI modificado micro: 0.800556 
+NMI oficial macro: 0.8348069 
+NMI oficial micro: 0.800556 
+
+------------------------------------------------------------
+[24/27] mu1_0.20_mu2_0.30, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 0.7400198 
+NMI modificado micro: 0.8967501 
+NMI oficial macro: 0.7400198 
+NMI oficial micro: 0.8967501 
+
+------------------------------------------------------------
+[25/27] mu1_0.20_mu2_0.40, semilla de red 101
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 0.6322909 
+NMI oficial macro: 1 
+NMI oficial micro: 0.6322909 
+
+------------------------------------------------------------
+[26/27] mu1_0.20_mu2_0.40, semilla de red 202
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 0.655198 
+NMI oficial macro: 1 
+NMI oficial micro: 0.655198 
+
+------------------------------------------------------------
+[27/27] mu1_0.20_mu2_0.40, semilla de red 303
+------------------------------------------------------------
+Estado: OK 
+NMI modificado macro: 1 
+NMI modificado micro: 0.649389 
+NMI oficial macro: 1 
+NMI oficial micro: 0.649389 
+
+============================================================
+BARRIDO TERMINADO
+============================================================
+Casos guardados: 27 
+Resultados: C:/Users/lysit/Desktop/Tesis igraph/rigraph-main/tesis/resultados/comparaciones/barrido_lfr_piloto/resultados_por_red.csv 
+Asignaciones: C:/Users/lysit/Desktop/Tesis igraph/rigraph-main/tesis/resultados/comparaciones/barrido_lfr_piloto/asignaciones_por_nodo 
+Log: C:/Users/lysit/Desktop/Tesis igraph/rigraph-main/tesis/resultados/comparaciones/barrido_lfr_piloto/salida_barrido.txt 
