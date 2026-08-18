@@ -1,0 +1,5 @@
+"scope","red","configuracion","repeticiones","nodos","aristas","nb_trials","tiempo_original_media_seg","tiempo_original_sd_seg","tiempo_prototipo_media_seg","tiempo_prototipo_sd_seg","overhead_absoluto_media_seg","overhead_absoluto_sd_seg","overhead_relativo_media_pct","overhead_relativo_sd_pct","max_tree_depth","num_levels","reejecuciones_infomap_media"
+"principal","LFR 5000","LFR_5000_jerarquia_reforzada",5,5000,48631,100,9.58200000000001,0.919004896613661,9.25999999999999,0.0452769256906648,-0.322000000000024,0.957533289238486,-2.69755862872882,8.64285928809631,3,4,2
+"principal","USairports","USairports",5,745,4618,500,19.048,1.84428034745263,10.508,0.0342052627529734,-8.54,1.8476065598498,-44.3967610996993,5.67834116937994,3,4,2
+"principal","Yeast","yeast",5,2375,11693,500,93.928,25.8082345386119,50.026,0.10876580344943,-43.902,25.8127220571562,-42.5855032022471,19.4428001483263,3,4,2
+"principal","Zachary Karate Club","Zachary",5,34,78,500,0.368,0.040865633483405,0.19,0.0187082869338697,-0.178,0.0356370593624109,-48.0326623009136,5.99019777335475,2,3,1

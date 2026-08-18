@@ -1,0 +1,9 @@
+Fecha: 2026-07-24 00:56:39 -04
+Repeticiones medidas: 5
+Calentamientos por red: 1
+Incluye barrido LFR: TRUE
+LÃƒÂ­mite del barrido (0 = todas): 0
+Biblioteca igraph original: C:/Users/lysit/Desktop/Tesis igraph/rigraph-main/tesis/lib/igraph_original
+Biblioteca igraph modificada: C:/Users/lysit/AppData/Local/R/win-library/4.6
+Sistema: Windows | 10 x64 | build 26200 | DESKTOP-MDA74AK | x86-64 | Lysitheea | Lysitheea | Lysitheea | DESKTOP-MDA74AK
+NÃƒÂºcleos lÃƒÂ³gicos detectados: 4

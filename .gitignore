@@ -35,3 +35,9 @@ lifecycle
 
 # Artefacto local de compilación en Windows
 /src/igraph.dll
+
+# Bibliotecas locales de R utilizadas para benchmarks
+/tesis/lib/
+
+# Paquete temporal de preparación del benchmark
+/benchmark_costo_computacional_para_repo/

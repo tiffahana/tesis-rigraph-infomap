@@ -2694,12 +2694,68 @@ cluster_infomap <- function(
   nb.trials = 10,
   modularity = TRUE
 ) {
+  # Instrumentación opcional para el benchmark de costo computacional.
+  # No modifica la salida normal ni la lógica del algoritmo. Para activarla,
+  # el script de benchmark entrega un environment mediante la opción:
+  # options(igraph.infomap.timing_env = <environment>)
+  timing_env <- getOption("igraph.infomap.timing_env", NULL)
+  timing_enabled <- is.environment(timing_env)
+  timing_total_start <- if (timing_enabled) {
+    proc.time()[["elapsed"]]
+  } else {
+    NA_real_
+  }
+  timing_initial_start <- if (timing_enabled) {
+    proc.time()[["elapsed"]]
+  } else {
+    NA_real_
+  }
+
   res <- community_infomap_impl(
     graph = graph,
     e_weights = e.weights,
     v_weights = v.weights,
     nb_trials = nb.trials
   )
+
+  timing_initial_elapsed <- if (timing_enabled) {
+    proc.time()[["elapsed"]] - timing_initial_start
+  } else {
+    NA_real_
+  }
+  timing_hierarchy_elapsed <- 0
+  timing_level_rows <- list()
+
+  record_level_timing <- function(
+    step,
+    input_modules,
+    module_graph_nodes,
+    module_graph_edges,
+    build_elapsed_sec,
+    infomap_elapsed_sec,
+    parent_modules,
+    accepted_level,
+    stop_reason
+  ) {
+    if (!timing_enabled) {
+      return(invisible(NULL))
+    }
+
+    timing_level_rows[[length(timing_level_rows) + 1L]] <<- data.frame(
+      step = as.integer(step),
+      input_modules = as.integer(input_modules),
+      module_graph_nodes = as.integer(module_graph_nodes),
+      module_graph_edges = as.integer(module_graph_edges),
+      build_elapsed_sec = as.numeric(build_elapsed_sec),
+      infomap_elapsed_sec = as.numeric(infomap_elapsed_sec),
+      parent_modules = as.integer(parent_modules),
+      accepted_level = as.logical(accepted_level),
+      stop_reason = as.character(stop_reason),
+      stringsAsFactors = FALSE
+    )
+
+    invisible(NULL)
+  }
 
   if (igraph_opt("add.vertex.names") && is_named(graph)) {
     res$names <- V(graph)$name
@@ -2708,209 +2764,324 @@ cluster_infomap <- function(
   res$algorithm <- "infomap"
   res$membership <- res$membership + 1
 
-if (!is.null(res$multilevel_modules)) {
-  compact_labels_local <- function(x) {
-    valid <- !is.na(x)
-    out <- rep(NA_integer_, length(x))
-    vals <- unique(x[valid])
-
-    for (i in seq_along(vals)) {
-      out[x == vals[i]] <- i
+  if (!is.null(res$multilevel_modules)) {
+    timing_hierarchy_start <- if (timing_enabled) {
+      proc.time()[["elapsed"]]
+    } else {
+      NA_real_
     }
 
-    out
+    compact_labels_local <- function(x) {
+      valid <- !is.na(x)
+      out <- rep(NA_integer_, length(x))
+      vals <- unique(x[valid])
+
+      for (i in seq_along(vals)) {
+        out[x == vals[i]] <- i
+      }
+
+      out
+    }
+
+    same_partition_local <- function(x, y) {
+      if (length(x) != length(y)) {
+        return(FALSE)
+      }
+
+      x_to_y <- vapply(
+        split(y, x),
+        function(z) length(unique(z)) == 1L,
+        logical(1)
+      )
+
+      y_to_x <- vapply(
+        split(x, y),
+        function(z) length(unique(z)) == 1L,
+        logical(1)
+      )
+
+      all(x_to_y) && all(y_to_x)
+    }
+
+    build_module_graph_local <- function(graph, groups, edge_weights = NULL) {
+      groups <- compact_labels_local(groups)
+      n_mod <- max(groups, na.rm = TRUE)
+
+      module_graph <- make_empty_graph(
+        n = n_mod,
+        directed = is_directed(graph)
+      )
+
+      if (ecount(graph) == 0 || n_mod <= 1) {
+        return(module_graph)
+      }
+
+      edge_ends <- ends(graph, E(graph), names = FALSE)
+
+      if (is.null(edge_weights)) {
+        edge_weights <- rep(1, nrow(edge_ends))
+      }
+
+      module_edges <- cbind(
+        groups[edge_ends[, 1]],
+        groups[edge_ends[, 2]]
+      )
+
+      keep <- module_edges[, 1] != module_edges[, 2]
+
+      module_edges <- module_edges[
+        keep,
+        ,
+        drop = FALSE
+      ]
+
+      edge_weights <- edge_weights[keep]
+
+      if (nrow(module_edges) == 0) {
+        return(module_graph)
+      }
+
+      module_graph <- add_edges(
+        module_graph,
+        as.vector(t(module_edges))
+      )
+
+      E(module_graph)$weight <- edge_weights
+
+      module_graph <- simplify(
+        module_graph,
+        edge.attr.comb = list(weight = "sum", "ignore")
+      )
+
+      module_graph
+    }
+
+    final_module <- compact_labels_local(res$membership)
+
+    levels_bottom_up <- list()
+    levels_bottom_up[[1]] <- final_module
+
+    current_level <- final_module
+    max_levels <- 6L
+
+    original_edge_weights <- NULL
+    if (!is.null(e.weights)) {
+      original_edge_weights <- e.weights
+    }
+
+    for (step in seq_len(max_levels - 1L)) {
+      input_modules <- length(unique(current_level[!is.na(current_level)]))
+      build_start <- if (timing_enabled) {
+        proc.time()[["elapsed"]]
+      } else {
+        NA_real_
+      }
+
+      module_graph <- build_module_graph_local(
+        graph,
+        current_level,
+        edge_weights = original_edge_weights
+      )
+
+      build_elapsed <- if (timing_enabled) {
+        proc.time()[["elapsed"]] - build_start
+      } else {
+        NA_real_
+      }
+
+      if (vcount(module_graph) <= 1 || ecount(module_graph) == 0) {
+        record_level_timing(
+          step = step,
+          input_modules = input_modules,
+          module_graph_nodes = vcount(module_graph),
+          module_graph_edges = ecount(module_graph),
+          build_elapsed_sec = build_elapsed,
+          infomap_elapsed_sec = NA_real_,
+          parent_modules = NA_integer_,
+          accepted_level = FALSE,
+          stop_reason = "grafo_agregado_vacio_o_unico_modulo"
+        )
+        break
+      }
+
+      infomap_start <- if (timing_enabled) {
+        proc.time()[["elapsed"]]
+      } else {
+        NA_real_
+      }
+
+      parent_res <- community_infomap_impl(
+        module_graph,
+        E(module_graph)$weight,
+        NULL,
+        nb.trials
+      )
+
+      infomap_elapsed <- if (timing_enabled) {
+        proc.time()[["elapsed"]] - infomap_start
+      } else {
+        NA_real_
+      }
+
+      parent_of_module <- compact_labels_local(parent_res$membership + 1)
+      parent_level <- parent_of_module[current_level]
+      parent_level <- compact_labels_local(parent_level)
+      parent_modules <- length(unique(parent_level[!is.na(parent_level)]))
+
+      if (same_partition_local(parent_level, current_level)) {
+        record_level_timing(
+          step = step,
+          input_modules = input_modules,
+          module_graph_nodes = vcount(module_graph),
+          module_graph_edges = ecount(module_graph),
+          build_elapsed_sec = build_elapsed,
+          infomap_elapsed_sec = infomap_elapsed,
+          parent_modules = parent_modules,
+          accepted_level = FALSE,
+          stop_reason = "particion_sin_cambios"
+        )
+        break
+      }
+
+      levels_bottom_up[[length(levels_bottom_up) + 1L]] <- parent_level
+      current_level <- parent_level
+
+      stop_reason <- if (length(unique(current_level)) == 1L) {
+        "raiz_unica_alcanzada"
+      } else {
+        "nivel_aceptado"
+      }
+
+      record_level_timing(
+        step = step,
+        input_modules = input_modules,
+        module_graph_nodes = vcount(module_graph),
+        module_graph_edges = ecount(module_graph),
+        build_elapsed_sec = build_elapsed,
+        infomap_elapsed_sec = infomap_elapsed,
+        parent_modules = parent_modules,
+        accepted_level = TRUE,
+        stop_reason = stop_reason
+      )
+
+      if (length(unique(current_level)) == 1L) {
+        break
+      }
+    }
+
+    levels_top_down <- rev(levels_bottom_up)
+
+    multilevel_df <- data.frame(
+      node_id = seq_len(vcount(graph))
+    )
+
+    for (i in seq_along(levels_top_down)) {
+      multilevel_df[[paste0("level_", i)]] <- levels_top_down[[i]]
+    }
+
+    multilevel_df$final_module <- final_module
+
+    res$multilevel_modules <- as.matrix(multilevel_df)
+    storage.mode(res$multilevel_modules) <- "integer"
+
+    res$num_levels <- as.integer(ncol(res$multilevel_modules) - 1L)
+
+    level_cols <- grep(
+      "^level_",
+      colnames(res$multilevel_modules),
+      value = TRUE
+    )
+
+    if (length(level_cols) > 0L) {
+      # Contar módulos distintos en cada nivel, ignorando valores NA.
+      modules_per_level <- vapply(
+        level_cols,
+        function(level_col) {
+          values <- res$multilevel_modules[, level_col, drop = TRUE]
+          values <- values[!is.na(values)]
+
+          length(unique(values))
+        },
+        integer(1L)
+      )
+
+      # Buscar el primer nivel donde exista una división real.
+      nontrivial_levels <- which(modules_per_level > 1L)
+
+      if (length(nontrivial_levels) > 0L) {
+        first_split <- nontrivial_levels[1L]
+
+        res$num_top_modules <- as.integer(
+          modules_per_level[first_split]
+        )
+
+        # Campo opcional para saber qué nivel se utilizó.
+        res$top_module_level <- level_cols[first_split]
+      } else {
+        # No se encontró una división jerárquica.
+        res$num_top_modules <- 1L
+        res$top_module_level <- level_cols[1L]
+      }
+
+      res$max_tree_depth <- as.integer(length(level_cols))
+    } else {
+      res$num_top_modules <- NA_integer_
+      res$top_module_level <- NA_character_
+      res$max_tree_depth <- 0L
+    }
+
+    if (timing_enabled) {
+      timing_hierarchy_elapsed <-
+        proc.time()[["elapsed"]] - timing_hierarchy_start
+    }
   }
-
-  same_partition_local <- function(x, y) {
-    if (length(x) != length(y)) {
-      return(FALSE)
-    }
-
-    x_to_y <- vapply(
-      split(y, x),
-      function(z) length(unique(z)) == 1L,
-      logical(1)
-    )
-
-    y_to_x <- vapply(
-      split(x, y),
-      function(z) length(unique(z)) == 1L,
-      logical(1)
-    )
-
-    all(x_to_y) && all(y_to_x)
-  }
-
-  build_module_graph_local <- function(graph, groups, edge_weights = NULL) {
-    groups <- compact_labels_local(groups)
-    n_mod <- max(groups, na.rm = TRUE)
-
-    module_graph <- make_empty_graph(
-      n = n_mod,
-      directed = is_directed(graph)
-    )
-
-    if (ecount(graph) == 0 || n_mod <= 1) {
-      return(module_graph)
-    }
-
-    edge_ends <- ends(graph, E(graph), names = FALSE)
-
-    if (is.null(edge_weights)) {
-      edge_weights <- rep(1, nrow(edge_ends))
-    }
-
-    module_edges <- cbind(
-      groups[edge_ends[, 1]],
-      groups[edge_ends[, 2]]
-    )
-
-    keep <- module_edges[, 1] != module_edges[, 2]
-
-    module_edges <- module_edges[
-      keep,
-      ,
-      drop = FALSE
-    ]
-
-    edge_weights <- edge_weights[keep]
-
-    if (nrow(module_edges) == 0) {
-      return(module_graph)
-    }
-
-    module_graph <- add_edges(
-      module_graph,
-      as.vector(t(module_edges))
-    )
-
-    E(module_graph)$weight <- edge_weights
-
-    module_graph <- simplify(
-      module_graph,
-      edge.attr.comb = list(weight = "sum", "ignore")
-    )
-
-    module_graph
-  }
-
-  final_module <- compact_labels_local(res$membership)
-
-  levels_bottom_up <- list()
-  levels_bottom_up[[1]] <- final_module
-
-  current_level <- final_module
-  max_levels <- 6L
-
-  original_edge_weights <- NULL
-  if (!is.null(e.weights)) {
-    original_edge_weights <- e.weights
-  }
-
-  for (step in seq_len(max_levels - 1L)) {
-    module_graph <- build_module_graph_local(
-      graph,
-      current_level,
-      edge_weights = original_edge_weights
-    )
-
-    if (vcount(module_graph) <= 1 || ecount(module_graph) == 0) {
-      break
-    }
-
-    parent_res <- community_infomap_impl(
-      module_graph,
-      E(module_graph)$weight,
-      NULL,
-      nb.trials
-    )
-
-    parent_of_module <- compact_labels_local(parent_res$membership + 1)
-    parent_level <- parent_of_module[current_level]
-    parent_level <- compact_labels_local(parent_level)
-
-    if (same_partition_local(parent_level, current_level)) {
-      break
-    }
-
-    levels_bottom_up[[length(levels_bottom_up) + 1L]] <- parent_level
-    current_level <- parent_level
-
-    if (length(unique(current_level)) == 1L) {
-      break
-    }
-  }
-
-  levels_top_down <- rev(levels_bottom_up)
-
-  multilevel_df <- data.frame(
-    node_id = seq_len(vcount(graph))
-  )
-
-  for (i in seq_along(levels_top_down)) {
-    multilevel_df[[paste0("level_", i)]] <- levels_top_down[[i]]
-  }
-
-  multilevel_df$final_module <- final_module
-
-  res$multilevel_modules <- as.matrix(multilevel_df)
-  storage.mode(res$multilevel_modules) <- "integer"
-
-  res$num_levels <- as.integer(ncol(res$multilevel_modules) - 1L)
-  
-  level_cols <- grep(
-  "^level_",
-  colnames(res$multilevel_modules),
-  value = TRUE
-)
-
-if (length(level_cols) > 0L) {
-
-  # Contar módulos distintos en cada nivel,
-  # ignorando valores NA.
-  modules_per_level <- vapply(
-    level_cols,
-    function(level_col) {
-      values <- res$multilevel_modules[, level_col, drop = TRUE]
-      values <- values[!is.na(values)]
-
-      length(unique(values))
-    },
-    integer(1L)
-  )
-
-  # Buscar el primer nivel donde exista una división real.
-  nontrivial_levels <- which(modules_per_level > 1L)
-
-  if (length(nontrivial_levels) > 0L) {
-    first_split <- nontrivial_levels[1L]
-
-    res$num_top_modules <- as.integer(
-      modules_per_level[first_split]
-    )
-
-    # Campo opcional para saber qué nivel se utilizó.
-    res$top_module_level <- level_cols[first_split]
-
-  } else {
-    # No se encontró una división jerárquica.
-    res$num_top_modules <- 1L
-    res$top_module_level <- level_cols[1L]
-  }
-
-  res$max_tree_depth <- as.integer(length(level_cols))
-
-} else {
-  res$num_top_modules <- NA_integer_
-  res$top_module_level <- NA_character_
-  res$max_tree_depth <- 0L
-}
-}
 
   if (modularity) {
     res$modularity <- modularity(graph, res$membership, weights = e.weights)
   }
   class(res) <- "communities"
+
+  if (timing_enabled) {
+    level_timings <- if (length(timing_level_rows) > 0L) {
+      do.call(rbind, timing_level_rows)
+    } else {
+      data.frame(
+        step = integer(),
+        input_modules = integer(),
+        module_graph_nodes = integer(),
+        module_graph_edges = integer(),
+        build_elapsed_sec = numeric(),
+        infomap_elapsed_sec = numeric(),
+        parent_modules = integer(),
+        accepted_level = logical(),
+        stop_reason = character(),
+        stringsAsFactors = FALSE
+      )
+    }
+
+    timing_env$last <- list(
+      initial_infomap_elapsed_sec = as.numeric(timing_initial_elapsed),
+      hierarchy_elapsed_sec = as.numeric(timing_hierarchy_elapsed),
+      total_elapsed_sec = as.numeric(
+        proc.time()[["elapsed"]] - timing_total_start
+      ),
+      hierarchy_reexecutions = as.integer(
+        sum(!is.na(level_timings$infomap_elapsed_sec))
+      ),
+      level_timings = level_timings,
+      num_levels = if (!is.null(res$num_levels)) {
+        as.integer(res$num_levels)
+      } else {
+        NA_integer_
+      },
+      max_tree_depth = if (!is.null(res$max_tree_depth)) {
+        as.integer(res$max_tree_depth)
+      } else {
+        NA_integer_
+      }
+    )
+  }
+
   res
 }
 

@@ -3,10 +3,10 @@
 # Tesis de Daniela Salinas Castro
 #
 # Genera, para cada red, una figura de dos paneles:
-#   izquierda  -> mÃ³dulos superiores del primer nivel efectivo
+#   izquierda  -> módulos superiores del primer nivel efectivo
 #   derecha    -> comunidades finales de final_module
 #
-# Los dos paneles usan exactamente la misma disposiciÃ³n de nodos.
+# Los dos paneles usan exactamente la misma disposición de nodos.
 #
 # Zachary se vuelve a ejecutar con cluster_infomap() modificado.
 # USairports y Yeast utilizan los CSV finales ya guardados para conservar
@@ -152,7 +152,7 @@ obtener_nivel_superior <- function(multinivel) {
   ]
 
   if (length(niveles_efectivos) == 0) {
-    stop("No se encontrÃ³ un nivel jerÃ¡rquico con mÃ¡s de un mÃ³dulo.")
+    stop("No se encontr\u00f3 un nivel jer\u00e1rquico con m\u00e1s de un m\u00f3dulo.")
   }
 
   niveles_efectivos[1]
@@ -311,7 +311,7 @@ crear_disposicion <- function(grafo, semilla) {
     )
   }
 
-  # LGL es mÃ¡s adecuado para USairports y Yeast que FR,
+  # LGL es más adecuado para USairports y Yeast que FR,
   # porque evita tiempos excesivos en redes grandes.
   layout_with_lgl(
     grafo,
@@ -393,19 +393,20 @@ crear_plot_multinivel <- function(
     tamano_vertice <- 4.2
     etiqueta_vertice <- NA
     tamano_etiqueta <- 0
-    ancho_arista <- 0.55
+    ancho_arista <- 1.20
     color_arista <- adjustcolor(
-      "gray55",
-      alpha.f = 0.22
+      "gray35",
+      alpha.f = 0.55
     )
   } else {
     tamano_vertice <- 2.5
     etiqueta_vertice <- NA
     tamano_etiqueta <- 0
-    ancho_arista <- 0.32
+    # Mismo grosor y visibilidad que USairports.
+    ancho_arista <- 1.20
     color_arista <- adjustcolor(
-      "gray55",
-      alpha.f = 0.12
+      "gray35",
+      alpha.f = 0.55
     )
   }
 
@@ -434,11 +435,11 @@ crear_plot_multinivel <- function(
     edge.color = color_arista,
     edge.width = ancho_arista,
     main = paste0(
-      "MÃ³dulos superiores (",
+      "M\u00f3dulos superiores (",
       nivel_superior,
       ")\n",
       cantidad_superiores,
-      " mÃ³dulos"
+      " m\u00f3dulos"
     )
   )
 
@@ -494,7 +495,7 @@ crear_plot_multinivel <- function(
     "Nivel superior: ",
     nivel_superior,
     "\n",
-    "MÃ³dulos superiores: ",
+    "M\u00f3dulos superiores: ",
     cantidad_superiores,
     "\n",
     "Comunidades finales: ",
@@ -525,26 +526,26 @@ resultado_zachary <- cluster_infomap(
 if (!"multilevel_modules" %in% names(resultado_zachary)) {
   stop(
     paste0(
-      "La versiÃ³n de igraph cargada no contiene multilevel_modules.\n",
+      "La versi\u00f3n de igraph cargada no contiene multilevel_modules.\n",
       "Ruta cargada: ",
       find.package("igraph"),
-      "\nVersiÃ³n: ",
+      "\nVersi\u00f3n: ",
       as.character(packageVersion("igraph"))
     )
   )
 }
 
-# En la versiÃ³n local modificada, el campo se recupera correctamente
-# mediante el operador $, tal como se utilizÃ³ en las pruebas anteriores.
+# En la versión local modificada, el campo se recupera correctamente
+# mediante el operador $, tal como se utilizó en las pruebas anteriores.
 multinivel_zachary <- resultado_zachary$multilevel_modules
 
 if (is.null(multinivel_zachary) || NROW(multinivel_zachary) == 0) {
   stop(
     paste0(
-      "cluster_infomap() no devolviÃ³ filas en multilevel_modules para Zachary.\n",
+      "cluster_infomap() no devolvi\u00f3 filas en multilevel_modules para Zachary.\n",
       "Ruta de igraph cargada: ",
       find.package("igraph"),
-      "\nVersiÃ³n: ",
+      "\nVersi\u00f3n: ",
       as.character(packageVersion("igraph")),
       "\nCampos disponibles: ",
       paste(names(resultado_zachary), collapse = ", ")
@@ -571,7 +572,7 @@ crear_plot_multinivel(
 
 # ============================================================
 # 2. USAIRPORTS
-# Resultados finales esperados: 745 nodos, 5 mÃ³dulos, 52 finales
+# Resultados finales esperados: 745 nodos, 5 módulos, 52 finales
 # ============================================================
 
 cat("\nProcesando USairports...\n")
@@ -610,7 +611,7 @@ crear_plot_multinivel(
 
 # ============================================================
 # 3. YEAST
-# Resultados finales esperados: 2375 nodos, 15 mÃ³dulos, 203 finales
+# Resultados finales esperados: 2375 nodos, 15 módulos, 203 finales
 # ============================================================
 
 cat("\nProcesando Yeast...\n")
